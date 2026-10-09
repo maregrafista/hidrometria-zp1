@@ -1,5 +1,5 @@
-const CACHE='rios-zp1-science-v4';
-const CORE=['./','index.html','styles.css','responsive.css','app.js','analytics.js','vendor/jszip.min.js','data.js','data.json','manifest.webmanifest','icon-192.png','icon-512.png'];
+const CACHE='rios-zp1-science-v5';
+const CORE=['./','index.html','styles.css','responsive.css','ux.css','app.js','ux.js','analytics.js','vendor/jszip.min.js','data.js','data.json','manifest.webmanifest','icon-192.png','icon-512.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('rios-zp1-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 // Sempre tenta a rede; o cache é apenas fallback e conserva a data da observação.
