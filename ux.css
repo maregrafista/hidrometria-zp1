@@ -38,6 +38,7 @@
   .chart-tools{display:block;margin:10px 0 2px}
   .year-switches{display:flex;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;padding:1px 0 7px}
   .year{flex:0 0 auto;min-height:38px;padding:6px 9px}
+  .year[data-year="2026"]{order:-1}
   .layer-switches{display:flex;justify-content:space-between;flex-wrap:wrap;gap:2px 8px}
   .layer-switches label{font-size:.72rem;min-height:30px}
   .plot-wrap{height:315px;min-height:0}
@@ -92,6 +93,7 @@
   :root[data-layout="mobile"] .chart-tools{display:block}
   :root[data-layout="mobile"] .year-switches{flex-wrap:nowrap;overflow-x:auto;padding-bottom:7px}
   :root[data-layout="mobile"] .year{flex:0 0 auto}
+  :root[data-layout="mobile"] .year[data-year="2026"]{order:-1}
   :root[data-layout="mobile"] .plot-wrap{height:315px;min-height:0}
   :root[data-layout="mobile"] .summary{grid-template-columns:repeat(2,minmax(0,1fr))}
   :root[data-layout="mobile"] .metric{padding:10px;min-height:91px}
