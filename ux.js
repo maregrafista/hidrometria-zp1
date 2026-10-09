@@ -3,12 +3,10 @@ const root=document.documentElement,viewport=document.querySelector('meta[name="
 const mobileButton=document.getElementById('view-mobile'),desktopButton=document.getElementById('view-desktop');
 const installButton=document.getElementById('install-app'),dialog=document.getElementById('install-dialog');
 let preference='auto',deferredInstall=null;
-try{preference=localStorage.getItem('rios-zp1-layout')||'auto'}catch{}
-if(!['auto','mobile','desktop'].includes(preference))preference='auto';
 const physicalPhone=()=>matchMedia('(pointer: coarse)').matches&&screen.width<=800;
 const effective=()=>preference==='auto'?(matchMedia('(max-width: 800px)').matches?'mobile':'desktop'):preference;
 function renderLayout(){const mode=effective();root.dataset.layout=preference==='auto'?'auto':mode;viewport.content=mode==='desktop'&&physicalPhone()?'width=1024,initial-scale=1,viewport-fit=cover':'width=device-width,initial-scale=1,viewport-fit=cover';mobileButton.setAttribute('aria-pressed',String(mode==='mobile'));desktopButton.setAttribute('aria-pressed',String(mode==='desktop'));mobileButton.title=mode==='mobile'?'Visualização celular ativa':'Usar visualização celular';desktopButton.title=mode==='desktop'?'Visualização computador ativa':'Usar visualização computador'}
-function setLayout(mode){preference=mode;try{localStorage.setItem('rios-zp1-layout',mode)}catch{}renderLayout()}
+function setLayout(mode){preference=mode;renderLayout()}
 mobileButton.addEventListener('click',()=>setLayout('mobile'));
 desktopButton.addEventListener('click',()=>setLayout('desktop'));
 matchMedia('(max-width: 800px)').addEventListener('change',()=>{if(preference==='auto')renderLayout()});
