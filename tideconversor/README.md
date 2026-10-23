@@ -4,7 +4,7 @@ Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horário
 
 ## Atualização de 23/10/2026
 - **Previsão harmônica de Fazendinha** (aba Previsão): 57 constantes da série de 313 dias do bloco 02, mais as componentes anuais **Sa (20,2 cm) e Ssa (8,6 cm)**; vale de 2024 a 2030. É a previsão que apresentou menos erros e a única usada para Fazendinha; para o Porto de Santana segue a tábua oficial de 2026.
-- **Aba Previsto × observado:** 16.154 horas observadas na régua (nov/2024 a out/2026) contra a previsão, com gráfico de erro, zoom por arraste, tabela de erros do trecho visível (viés, RMSE, EAM, P95, r), dispersão, histograma e CSV.
+- **Aba Previsto × observado:** uma janela de 3 a 30 dias (setas, data e 4 atalhos), com escala fixa que não muda de um período para outro. Mostra o resumo em linguagem direta (erro típico, tendência, 9 em cada 10 horas, horário da maré), o gráfico observado × previsto com as diferenças hora a hora, a tabela de preamares e baixamares previstas e observadas, o erro mês a mês e a exportação em CSV. Indica se o período foi usado no ajuste ou é teste independente.
 - **NR de trabalho = 66,7 cm acima do zero da régua** (RLS − 0,667 m) pelo método do Alte Franco (1997): NR = S0 anual − (M2 + S2 + N2 + K2) = 229,7 − 163,0. Substitui RLS − 0,75 m; os níveis acima do NR foram recalculados em todas as abas.
 - **Quadro de marés** (aba Previsão): preamar e baixamar médias de sizígia e quadratura, nível médio e estabelecimento do porto (4 h 16 min).
 - **Calibração, defasagens e histórico recalculados** com a série RLS de 07/11/2024 a 23/10/2026: 972 pares de calibração, 1.001 extremos pareados, médias diárias até outubro/2026.
