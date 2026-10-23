@@ -1,30 +1,57 @@
-# TideConversor v2.1
+# TideConversor
 
-Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, série histórica, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
+Desenvolvido pelo Setor de Hidrografia da UNIPILOT.
 
-## Novidades da v2.1 (23/10/2026)
-- **Previsão harmônica de Fazendinha** (aba Previsão): 57 constantes obtidas da série de 313 dias do bloco 02, com as componentes anuais **Sa (20,2 cm) e Ssa (8,6 cm)**; vale de 2024 a 2030. O método da tábua de Santana convertida continua disponível.
-- **Aba Previsto × observado:** 16.154 horas observadas na régua (nov/2024 a out/2026) contra as previsões, com gráfico de erro, zoom por arraste, tabela de erros do trecho visível (viés, RMSE, EAM, P95, r), dispersão, histograma e exportação em CSV.
-- **NR de trabalho = 66,7 cm acima do zero da régua** (RLS − 0,667 m), pelo método do Alte Franco (1997) com o nível médio anual S0 = 229,7 cm: NR = 229,7 − (M2 + S2 + N2 + K2) = 229,7 − 163,0. Substitui o RLS − 0,75 m. Todos os níveis acima do NR, inclusive o histórico, foram recalculados.
-- **Quadro de marés** de Fazendinha: preamar e baixamar média de sizígia e de quadratura, nível médio e estabelecimento do porto (4 h 16 min).
+Conversão sazonal entre a régua de Fazendinha e a altura prevista na tábua do Porto de Santana, com análise descritiva dos horários e do nível médio.
 
-## Desempenho (previsto − observado, RMSE horário em cm)
-| Período | só marés | com Sa/Ssa |
-|---|---|---|
-| B03 jan–mar/2026 (independente) | 17,7 | **12,1** |
-| B01 nov–dez/2024 (seca, independente) | 52,0 | **26,2** |
-| B02 (ajuste) | 20,8 | 11,6 |
-| B04 (ajuste) | 15,7 | 11,9 |
+## Uso
 
-Erro de horário de preamar/baixamar: +9 / −6 min em média (erro absoluto ≈ 11 a 12 min). Sa e Ssa vêm de menos de dois ciclos anuais e refletem o regime do rio de 2025–2026; fora dele o nível médio pode mudar até ±30 cm.
+Abra `index.html` ou acesse a página publicada. O aplicativo é autocontido, inclui seu logotipo e funciona offline ao salvar a página.
 
-## Equações
-R = leitura da régua; H = nível acima do NR; T = tábua de Santana (m). H = R − 0,667; T = a + bR com a e b locais no tempo (`data/calibracao_diaria.csv`). Previsão: nível = S0 + Σ f·H·cos(V0 + u − GW).
+- **Alturas:** selecione a referência, informe a altura em metros e o mês. Para entrada na régua, apresenta H acima do NR e equivalente na tábua. Para entrada na tábua, apresenta H estimado em Fazendinha e equivalente na régua.
+- **Horários:** diferença entre extremo observado em Fazendinha e previsão de Santana. Negativo significa antes da previsão; positivo, depois. Não equivale, isoladamente, à propagação física entre duas estações observadas.
+- **Série histórica:** médias mensais e cobertura de 2024–2026. 2024 é mostrado separadamente por ter ocorrido seca extrema regional. 2025 é um comparador, não normal climatológica.
 
-## Documentação e dados
-- [ANALISE_HARMONICA.md](ANALISE_HARMONICA.md): análise harmônica, NR, previsão e erros (com figuras e scripts em `analise/harmonica/`).
-- [ANALISE.md](ANALISE.md): reanálise da calibração e das defasagens com a série RLS.
-- `data/`: constantes (`constantes_B02.csv`, `constantes_Sa_Ssa.csv`), erros (`erro_mensal.csv`, `previsao_vs_observado_PM_BM_eventos.csv`), previsão de preamares e baixamares de nov–dez/2026 e as tabelas anteriores.
+## Equações e validação
 
-## Aviso
-Uso técnico e de apoio. Não substitui a Tábua de Marés oficial da DHN nem serve à navegação. O método de análise reproduz o descrito no manual do PACMARÉ 2003 e foi conferido contra a saída do próprio programa em um caso; o algoritmo exato do ANHAMA (Franco, 2009, cap. 8) ainda não foi aplicado.
+R = altura acima do zero da régua, H = altura em Fazendinha acima do NR, T = altura da tábua de Santana. Todas em metros.
+
+H = R − 0,75. T = a + bR. No sentido inverso: R = (T − a)/b.
+
+A calibração mensal usa somente dados de 2026, pareados nos horários oficiais de preamar e baixamar. 66.419 leituras válidas e 1.003 pares. Validação por retirada de semanas inteiras: RMSE 8,30 cm para T e 7,94 cm para R. Trata-se de validação temporal interna, não validação em outro ano nem intervalo de confiança. Alturas intermediárias não foram validadas separadamente.
+
+Pressupõe-se o mesmo zero entre a régua física e as séries, sem nivelamento independente fornecido. O valor de NR foi informado pelo usuário e é aplicado uma vez. Os relógios foram mantidos conforme os arquivos, sem deslocamento inferido.
+
+## Novo arquivo
+
+`atalaia_loggrp_20260728_20260803.xlsx` contém 186.510 linhas, de 30/09/2024 16:20 a 14/07/2026 06:30. Seus gráficos internos identificam a coluna E como altura acima do zero e F = E − 0,75. A coluna D, com longos trechos quase constantes, não foi usada. O nome do sensor da coluna E não foi presumido.
+
+Nas coincidências de 2026, a coluna E tem preferência sobre os arquivos Report; não se calculou média de fontes nem se duplicaram horários. Há 55.254 coincidências válidas e 19.472 valores idênticos. Um pico isolado em 09/06/2026 10:30, +0,65/−0,66 m em cinco minutos, foi retirado apenas da análise e preservado na auditoria original. A nova série permite recuperar o trecho de 06/01 que era suspeito nos Reports.
+
+As médias diárias históricas exigem ≥260 amostras e intervalo máximo no dia ≤60 minutos. Médias mensais dão peso igual a cada dia qualificado. Meses parciais são identificados. A comparação de outubro–dezembro 2024 × 2025 usa meses completos: diferenças observadas de −30,24; −23,58 e −23,09 cm. Essas diferenças não isolam causalmente o efeito da seca.
+
+## Ciclo lunar e extremos
+
+Fases do U.S. Naval Observatory em UTC, convertidas para UTC−03. Janela padrão ±2 dias, ajustável a ±1 ou ±3. Lua nova/cheia: sizígia; quartos: quadratura. Eventos fora da janela não entram nas médias. A classificação astronômica não pressupõe coincidência exata com máximos e mínimos da amplitude local.
+
+Extremos detectados independentemente, por segmento, proeminência 0,50 m. Candidatos do mesmo tipo a menos de 3h são agrupados. Horário de patamar = centro da primeira à última ocorrência do extremo. Pareamento um a um do mesmo tipo, distância máxima 180 min, sem atravessar lacunas >90 min. Suporte padrão ≤20 min e patamar ≤40 min; opção ampliada ≤65 min. 970 extremos antes dos filtros. n<3: média não mostrada; n=3–9: poucos pares. DP é dispersão dos eventos, não incerteza da média.
+
+## Fontes
+
+- Dados locais fornecidos pelo usuário: XLSX Atalaia e arquivos Report.
+- Tábua oficial Porto de Santana 2026, PDF fornecido pelo usuário.
+- Fases lunares: https://aa.usno.navy.mil/api/moon/phases/year?year=2026
+- Contexto da seca de 2024: https://www.sgb.gov.br/sala-de-imprensa/-/asset_publisher/ujyx/content/monitoramento-hidrologico-permite-acompanhar-evolucao-da-estiagem-na-regiao-norte
+- Logotipo: https://unipilot.com/imagens/site/icones/logo.png
+
+Não se publicaram as planilhas originais neste diretório. Os dados derivados, coeficientes, fases e estatísticas usados pela interface estão incorporados no HTML. As tabelas CSV acompanham a página. Atualização: 23/10/2026.
+
+## Previsão de nível e coluna d’água
+
+A aba Previsão usa os 1.411 extremos da tábua de Santana de 2026. Entre extremos consecutivos usa interpolação cossenoidal, que passa pelos extremos sem ser uma previsão harmônica contínua oficial. T = T0 + (T1 − T0) × [1 − cos(pi × u)]/2. Não se extrapola além do suporte temporal.
+
+Em Fazendinha, aplica-se H = (T − a)/b − 0,75, apenas de janeiro a outubro de 2026. Não há correção de fase local; os horários PM/BM exibidos são os de Santana. Níveis intermediários e horários locais não têm validação independente; o RMSE da calibração em extremos não é erro validado desta curva horária. Santana cobre janeiro a dezembro de 2026.
+
+A coluna d’água só é calculada quando o usuário informa uma profundidade local, positiva, referida ao mesmo NR: coluna = profundidade ao NR + nível acima do NR. Sem profundidade, mostra-se somente o nível. Ao mudar o local, a profundidade é apagada para não transportá-la automaticamente.
+
+As análises foram organizadas em vistas mutuamente exclusivas (médias/gráfico/tabela) e o método abre em uma janela. A disposição compacta foi verificada em tela de celular de 390 × 740. Em telas muito baixas ou com teclado aberto, a rolagem fica disponível para preservar o acesso aos controles.
