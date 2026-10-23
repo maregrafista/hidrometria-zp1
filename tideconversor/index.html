@@ -132,7 +132,18 @@ figure{margin:0}
 @media print{.topnav,header,footer{display:none}}
 .topnav button{white-space:nowrap}
 @media (max-width:900px){.topnav button,.topnav button[aria-selected=true]{padding:10px 8px!important;font-size:12.5px}.topnav{gap:0;flex-wrap:wrap;justify-content:flex-end}}
-@media (max-width:560px){.topnav{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;max-width:100%}.topnav button{flex:none}}
+@media (max-width:560px){.top{flex-wrap:wrap}.topnav{display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:0}.topnav button,.topnav button[aria-selected=true]{white-space:normal;text-align:center;line-height:1.2;min-height:42px;padding:8px 4px!important}}
+@media (max-width:600px){#valueDown,#valueUp,#dayPrev,#dayNext,#nowBtn,.step{min-width:42px;min-height:42px}.chip{min-height:38px}#carta .carta-const{font-size:12px}#carta .carta-const th,#carta .carta-const td{padding:6px 3px}#carta .carta-const th{font-size:10px;letter-spacing:.02em}#carta .carta-tab th{font-size:10.5px}.rangebar .lbl{font-size:11px}}
+/* celular: texto mínimo de 12 px e alvos de toque de pelo menos 40 px */
+@media (max-width:600px){
+  .sub,.hint,.note,.label,.stats,.sample,.direction,.legend,.calendar span,.pill,.kind,.chip,.textbutton,.method-button,.cmp-legend,.carta-note,.fig-cap,.cmp-tabhead,.cmp-card .k,details,details p,summary,.footline,footer,small{font-size:max(12px,1em)}
+  .sub,.hint,.note,.label,.stats,.sample,.chip,.textbutton,.method-button,.pill,.kind,.legend,footer,.footline,.calendar span{font-size:12px!important}
+  select,input:not([type=checkbox]):not([type=radio]):not([type=range]),.chip,.textbutton,.method-button,.step,.seg button{min-height:40px}
+  .textbutton,.method-button,.chip{display:inline-flex;align-items:center}
+  .inputbox input{min-height:0}
+  td small,.calculation,.cmp-card .k,.result h3,.history-readout{font-size:11.5px!important}
+  .calculation{font-size:12px!important}
+}
 
 #compare:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}
 #compare>*{flex:none}#carta:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#carta>*{flex:none}#carta .sectionhead{margin-top:0}#compare .sectionhead{margin-top:0}
@@ -211,7 +222,7 @@ figure{margin:0}
     <h3>Tabela 4. Referência vertical, método e qualidade dos dados</h3>
     <table class="carta-tab" id="cartaQual"><tbody></tbody></table>
     <h3>Tabela 5. Constantes harmônicas principais</h3>
-    <table class="carta-tab carta-const"><thead><tr><th>Componente</th><th>Velocidade (°/h)</th><th>H (m)</th><th>G local UTC−3 (°)</th><th>G Greenwich (°)</th></tr></thead><tbody id="cartaConst"></tbody></table>
+    <div class="tablewrap-x"><table class="carta-tab carta-const"><thead><tr><th>Componente</th><th>Velocidade (°/h)</th><th>H (m)</th><th>G local UTC−3 (°)</th><th>G Greenwich (°)</th></tr></thead><tbody id="cartaConst"></tbody></table></div>
     <p class="carta-note" id="cartaFonte"></p>
   </article>
   <p class="note">Alturas calculadas com as 113 constantes do PACMARÉ e o nível médio anual. Classificação da maré, cálculo do NR e período mínimo de observação seguem a NORMAM-501/DHN (Anexo J); datum, incerteza a 95 % e distinção entre observado e previsto seguem a IHO S-44 (6.1.0). O NR de trabalho é uma referência do Setor de Hidrografia da UNIPILOT e não substitui a Tábua de Marés nem as cartas oficiais da DHN, nem serve à navegação.</p>
@@ -643,6 +654,7 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     svg.setAttribute('viewBox', `0 0 ${W} ${Ht}`); svg.setAttribute('height', Ht); svg.setAttribute('width', W); svg.innerHTML = s + '</g>';
   }
   drawSvg(); let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawSvg, 120); });
+  new MutationObserver(() => { if (!$('carta').hidden) setTimeout(drawSvg, 30); }).observe($('carta'), { attributes: true, attributeFilter: ['hidden'] });
   if (window.ResizeObserver) { let lw = 0; new ResizeObserver(() => { const w = $('cartaSvg').parentNode.clientWidth; if (w && w !== lw) { lw = w; drawSvg(); } }).observe($('cartaSvg').parentNode); }
   $('cartaPrint').onclick = () => window.print();
 })();
