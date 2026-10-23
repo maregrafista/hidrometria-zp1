@@ -63,12 +63,70 @@ html{height:100%}body{height:100dvh;min-height:0;overflow:hidden;display:flex;fl
 #compare .cmp-cards3{grid-template-columns:repeat(3,1fr);margin:14px 0 0}
 @media (max-width:760px){#compare .cmp-cards3{grid-template-columns:1fr}}
 #compare .cmp-evhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}#compare .cmp-evhead h3{margin:0}
-#compare .cmp-legend i.dot{border-radius:50%;width:10px;height:10px}#compare .cmp-legend i.ring{background:transparent;border:2px solid #1b9664}
+#compare .cmp-legend i.dot{border-radius:50%;width:10px;height:10px}#compare .cmp-legend i.ring{background:transparent;border:2px solid #009E73}
 #compare .cmp-legend i.tri{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid currentColor;border-radius:0;background:none}
 #compare .cmp-legend i.gap{background:rgba(150,160,150,.3)}
 #compare #cmpOv{cursor:pointer}
 #carta .carta-chart th,#carta .carta-chart td{text-align:center}#carta .carta-chart td:first-child,#carta .carta-chart th:first-child{text-align:left}
 #carta .carta-chart tr.faz td{font-weight:700;background:var(--sage,#eef)}#carta .carta-chart tr.oficial td{color:var(--muted)}
+
+:root{--c-pm:#D55E00;--c-bm:#0072B2}
+/* Acabamento editorial, no estilo de periódico científico (compartilhado pela v1 e pela v2) */
+:root{--serif:Charter,"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif}
+h1,h2,h3,.subhead,.brand strong{font-family:var(--serif)}
+h2{font-weight:600;letter-spacing:-.015em}
+.sectionhead{border-bottom:1.5px solid var(--ink,#222);padding-bottom:12px}
+.sub{font-family:var(--serif);font-style:italic}
+.card{border-radius:3px;box-shadow:none}
+.chip,.step,.cmp-nav input,select,.inputbox,.seg,.seg button{border-radius:3px}
+.chip[aria-pressed=true]{font-weight:600}
+/* abas como índice de revista */
+.topnav{gap:2px}
+.topnav button,.topnav button[aria-selected=true]{background:transparent!important;border-radius:0!important;padding:10px 14px!important;color:var(--muted)!important;box-shadow:inset 0 -2px 0 transparent}
+.topnav button[aria-selected=true]{color:var(--ink)!important;font-weight:650;box-shadow:inset 0 -2.5px 0 var(--forest,#173f35)}
+.topnav button:hover{color:var(--ink)!important}
+/* tabelas "booktabs": só régua superior, sob o cabeçalho e inferior */
+.panel table{border-collapse:collapse;font-variant-numeric:tabular-nums lining-nums}
+.panel thead th{border-top:1.5px solid var(--ink,#222);border-bottom:1px solid var(--ink,#222);background:transparent;font-weight:600}
+.panel tbody td{border-bottom:1px solid var(--line)}
+.panel tbody tr:last-child td{border-bottom:1.5px solid var(--ink,#222)}
+.panel tbody th{font-weight:600}
+/* legendas de figuras e tabelas */
+figure{margin:0}
+.fig-cap,.cmp-tabhead,.carta-note{font:13px/1.5 var(--serif);color:var(--ink,#222);margin:10px 0 0}
+.fig-cap b,.cmp-tabhead b{font-variant:small-caps;letter-spacing:.04em;font-weight:700}
+.cmp-tabhead{margin:22px 0 8px}
+.cmp-legend{font-family:ui-sans-serif,system-ui,sans-serif}
+/* Previsto × observado */
+#compare .intro{background:transparent;border:0;border-left:3px solid var(--forest,#173f35);border-radius:0;padding:2px 0 2px 14px;font:15.5px/1.6 var(--serif)}
+#compare .cmp-cards{gap:0;border-top:1.5px solid var(--ink,#222);border-bottom:1.5px solid var(--ink,#222);margin-bottom:6px}
+#compare .cmp-card{border:0;border-radius:0;background:transparent;padding:12px 16px;border-left:1px solid var(--line)}
+#compare .cmp-card:first-child{border-left:0;padding-left:4px}
+#compare .cmp-card .k{font-size:11px;letter-spacing:.08em}
+#compare .cmp-card .v{font:600 32px var(--serif);letter-spacing:-.02em}
+#compare .cmp-verdict{font:17px/1.55 var(--serif);margin:16px 0}
+#compare .cmp-tag{border-radius:3px}
+#compare .cmp-tip{border-radius:3px;font-family:ui-sans-serif,system-ui,sans-serif}
+#compare .fig{padding:16px 18px 12px}
+/* Quadro de informações da maré */
+#carta .carta-box{border:2px solid var(--ink,#222);outline:1px solid var(--ink,#222);outline-offset:4px;border-radius:0;padding:22px 26px;margin:6px 6px 22px;background:var(--card)}
+#carta .carta-head{border-bottom:1.5px solid var(--ink,#222);padding-bottom:12px;margin-bottom:6px}
+#carta .carta-head span{font:600 12.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.32em;color:var(--ink)}
+#carta .carta-head b{font:700 28px var(--serif);letter-spacing:.02em;margin:4px 0}
+#carta .carta-head i{font:italic 14px var(--serif);color:var(--muted)}
+#carta h3{font:600 15px var(--serif);letter-spacing:0;text-transform:none;color:var(--ink);margin:22px 0 8px}
+#carta .carta-tab{font-size:14.5px}
+#carta .carta-tab th{font:600 11.5px ui-sans-serif,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:transparent}
+#carta .carta-tab th,#carta .carta-tab td{border-left:0;border-right:0;padding:8px 10px}
+#carta .carta-chart{font-size:16px}#carta .carta-chart th[colspan]{border-bottom:1px solid var(--ink)}
+#carta .carta-chart tr.faz td{background:transparent;font-weight:700;font-size:17px}
+#carta .carta-chart td{padding:10px 10px}
+#carta .carta-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:26px}#carta table,#carta th,#carta td{white-space:normal}#carta .carta-chart th,#carta .carta-chart td{white-space:nowrap}#carta .carta-grid>*{min-width:0}
+#carta .carta-fig{margin-top:6px}
+#carta #cartaSvg{max-width:none;width:100%}
+#carta tr.ref td{border-top:1.5px solid var(--ink)}
+@media (max-width:760px){#carta .carta-grid{grid-template-columns:minmax(0,1fr)}#compare .cmp-card{border-left:0;border-top:1px solid var(--line)}#compare .cmp-card:first-child{border-top:0}#carta .carta-box{padding:16px 14px}#carta .carta-head b{font-size:23px}#carta .carta-chart{font-size:13.5px}#carta .carta-chart tr.faz td{font-size:14px}}
+@media print{.topnav,header,footer{display:none}}
 
 #compare:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}
 #compare>*{flex:none}#carta:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#carta>*{flex:none}#carta .sectionhead{margin-top:0}#compare .sectionhead{margin-top:0}
@@ -84,10 +142,11 @@ html{height:100%}body{height:100dvh;min-height:0;overflow:hidden;display:flex;fl
 
   <p class="intro">Em cima, <b>todo o registro</b> da régua (média de cada dia). Embaixo, o <b>período escolhido</b> em detalhe: a <b>curva preta</b> é o nível que a régua registrou e a <b>curva verde</b>, o que a previsão dizia. Os <b>pontos</b> marcam as preamares e baixamares: preto = observado, verde vazado = previsto. O erro é medido só nesses pontos.</p>
 
-  <div class="card"><h3>Todo o registro</h3><p class="sub">Média diária do nível, de nov/2024 a hoje. A faixa marrom é o período mostrado abaixo; toque no gráfico para mudar de lugar. A área cinza é o período usado no ajuste.</p>
-    <canvas id="cmpOv" height="150" aria-label="Nível médio diário observado e previsto em todo o registro"></canvas>
-    <div class="cmp-legend"><span><i style="background:var(--ink,#1c1c1c)"></i>Observado</span><span><i style="background:#1b9664"></i>Previsto</span></div>
-    <div class="cmp-cards cmp-cards3" id="cmpSummary"></div></div>
+  <figure class="card fig"><canvas id="cmpOv" height="150" aria-label="Nível médio diário observado e previsto em todo o registro"></canvas>
+    <div class="cmp-legend"><span><i style="background:var(--ink,#1c1c1c)"></i>Observado</span><span><i style="background:#009E73"></i>Previsto</span></div>
+    <figcaption class="fig-cap"><b>Figura 1.</b> Nível médio diário observado e previsto em todo o registro de Fazendinha (nov/2024 a out/2026), em metros acima do NR. A faixa marrom marca o período detalhado abaixo (toque no gráfico para mudá-la); a área cinza é o período usado no ajuste da previsão (bloco 02).</figcaption></figure>
+  <div class="cmp-tabhead"><b>Tabela 1.</b> Erro de altura nas preamares e baixamares (previsto − observado).</div>
+  <div class="cmp-cards cmp-cards3" id="cmpSummary"></div>
 
   <div class="card cmp-pick">
     <span class="label">1 · Escolha o que quer ver</span>
@@ -104,21 +163,23 @@ html{height:100%}body{height:100dvh;min-height:0;overflow:hidden;display:flex;fl
 
   <p class="cmp-verdict" id="cmpVerdict" aria-live="polite"></p>
 
-  <div class="card">
-    <div class="cmp-legend"><span><i style="background:var(--ink,#1c1c1c)"></i>Observado (curva)</span><span><i style="background:#1b9664"></i>Previsto (curva)</span><span><i class="dot" style="background:var(--ink,#1c1c1c)"></i>PM/BM observada</span><span><i class="dot ring"></i>PM/BM prevista</span><span><i class="dot" style="background:#eb6834"></i>erro nas preamares</span><span><i class="tri" style="color:#3a7bd5"></i>erro nas baixamares</span><span><i class="gap"></i>sem registro</span></div>
+  <figure class="card fig">
+    <div class="cmp-legend"><span><i style="background:var(--ink,#1c1c1c)"></i>Observado (curva)</span><span><i style="background:#009E73"></i>Previsto (curva)</span><span><i class="dot" style="background:var(--ink,#1c1c1c)"></i>PM/BM observada</span><span><i class="dot ring"></i>PM/BM prevista</span><span><i class="dot" style="background:var(--c-pm,#D55E00)"></i>erro nas preamares</span><span><i class="tri" style="color:var(--c-bm,#0072B2)"></i>erro nas baixamares</span><span><i class="gap"></i>sem registro</span></div>
     <div class="cmp-chart" id="cmpWrap">
       <canvas id="cmpMain" height="300" aria-label="Nível observado e previsto"></canvas>
       <canvas id="cmpErr" height="130" aria-label="Diferença de altura nas preamares e baixamares"></canvas>
       <div class="cmp-cursor" id="cmpCursor" hidden></div><div class="cmp-tip" id="cmpTip" hidden></div>
     </div>
-    <p class="note">Escala fixa: altura em metros acima do NR (gráfico de cima) e erro de altura em centímetros (gráfico de baixo: acima de zero = previsão mais alta que a água). As escalas são as mesmas em todos os períodos.</p>
-  </div>
+    <figcaption class="fig-cap"><b>Figura 2.</b> Período escolhido. (a) Nível observado (curva preta) e previsto (curva verde), em metros acima do NR; os pontos marcam as preamares e baixamares, e o traço cinza liga cada observação à sua previsão. (b) Erro de altura nas preamares (círculos) e baixamares (triângulos): acima de zero, a previsão ficou mais alta que a água. Escalas fixas, iguais em todos os períodos; faixas cinza = sem registro.</figcaption>
+  </figure>
 
+  <div class="cmp-tabhead"><b>Tabela 2.</b> Resumo do período escolhido.</div>
   <div class="cmp-cards" id="cmpCards" aria-live="polite"></div>
-  <div class="card"><div class="cmp-evhead"><h3 id="cmpEvTitle">Preamares e baixamares neste período</h3><button class="chip" id="cmpAll" type="button">Ver todas as marés do registro</button></div><p class="sub">A hora e a altura em que a água realmente chegou ao máximo e ao mínimo, contra o que a previsão dizia.</p><div class="tablewrap"><table id="cmpEvents"></table></div></div>
+  <div class="card"><div class="cmp-evhead"><div class="cmp-tabhead" style="margin:0"><b>Tabela 3.</b> <span id="cmpEvTitle">Preamares e baixamares neste período</span>: hora e altura em que a água chegou ao máximo e ao mínimo, contra o que a previsão dizia.</div><button class="chip" id="cmpAll" type="button">Ver todas as marés do registro</button></div><div class="tablewrap"><table id="cmpEvents"></table></div></div>
 
-  <div class="card"><h3>E nos outros meses?</h3><p class="sub">Erro típico de altura nas preamares e baixamares de cada mês. Toque em um ponto para ver aquele mês.</p><canvas id="cmpMonths" height="190" aria-label="Erro típico por mês"></canvas>
-    <div class="cmp-legend"><span><i style="background:#1b9664"></i>teste independente (dados não usados no ajuste)</span><span><i style="background:#9aa39c"></i>dados usados no ajuste (erro menor, não é um teste)</span><span><i style="background:#d9a441"></i>registro irregular (após 11/08/2026)</span></div></div>
+  <figure class="card fig"><canvas id="cmpMonths" height="190" aria-label="Erro típico por mês"></canvas>
+    <div class="cmp-legend"><span><i style="background:#009E73"></i>teste independente (dados não usados no ajuste)</span><span><i style="background:#8a9590"></i>dados usados no ajuste (erro menor, não é um teste)</span><span><i style="background:#E69F00"></i>registro irregular (após 11/08/2026)</span></div>
+    <figcaption class="fig-cap"><b>Figura 3.</b> Erro típico (RMSE) de altura nas preamares e baixamares, mês a mês. Toque em um ponto para ver aquele mês em detalhe.</figcaption></figure>
 
   <details><summary>Como ler estes números</summary>
     <p><b>Erro típico (RMSE)</b>: diferença de altura entre as preamares e baixamares previstas e observadas, em centímetros (só elas são usadas; as horas intermediárias não entram no cálculo); erros grandes pesam mais. <b>Viés</b>: se a previsão ficou, em média, acima (+) ou abaixo (−) da água. <b>9 em cada 10 marés</b>: o erro máximo em 90 % das preamares e baixamares. <b>Horário</b>: diferença média entre a hora prevista e a observada para preamares e baixamares.</p>
@@ -129,20 +190,21 @@ html{height:100%}body{height:100dvh;min-height:0;overflow:hidden;display:flex;fl
   <div class="sectionhead"><div><h2>Quadro de maré</h2><p class="sub">No formato das informações de maré das cartas náuticas · alturas em metros acima do NR</p></div><button class="chip noprint" id="cartaPrint" type="button">Imprimir / salvar PDF</button></div>
   <article class="carta-box" aria-label="Informações de maré de Fazendinha">
     <header class="carta-head"><span>INFORMAÇÕES SOBRE A MARÉ</span><b>ATALAIA DE FAZENDINHA</b><i>Lat 00°03,4′ S · Long 051°06,5′ W · Fuso UTC−03</i></header>
+    <h3>Tabela 1. Informações sobre a maré</h3>
     <table class="carta-tab carta-chart"><thead><tr><th rowspan="2">Lugar</th><th rowspan="2">Lat</th><th rowspan="2">Long</th><th rowspan="2">HWF&amp;C</th><th colspan="5">Alturas em metros sobre o NR</th></tr><tr><th>MHWS</th><th>MHWN</th><th>MLWN</th><th>MLWS</th><th>MSL</th></tr></thead><tbody id="cartaCarta"></tbody></table>
     <p class="carta-note">As duas últimas linhas reproduzem o quadro da carta náutica informada (Macapá e Companhia das Docas de Santana), para comparação. A primeira é Fazendinha, calculada neste aplicativo.</p>
     <div class="carta-grid">
       <div>
-        <h3>Alturas da maré</h3>
+        <h3>Tabela 2. Alturas da maré</h3>
         <table class="carta-tab"><thead><tr><th>Nível</th><th>Sigla</th><th>Acima do NR (m)</th><th>Acima do zero da régua (m)</th></tr></thead><tbody id="cartaNiveis"></tbody></table>
-        <h3>Dados gerais</h3>
+        <h3>Tabela 3. Dados gerais</h3>
         <table class="carta-tab" id="cartaGerais"><tbody></tbody></table>
       </div>
-      <div><h3>Esquema dos níveis</h3><svg id="cartaSvg" role="img" aria-label="Esquema dos níveis de maré em relação ao NR" viewBox="0 0 520 400"></svg></div>
+      <figure class="carta-fig"><svg id="cartaSvg" role="img" aria-label="Esquema dos níveis de maré em relação ao NR" viewBox="0 0 640 500"></svg><figcaption class="fig-cap"><b>Figura 1.</b> Níveis de maré de Fazendinha em relação ao NR (metros). A faixa clara é a amplitude de sizígia e a escura, a de quadratura; MSL é o nível médio.</figcaption></figure>
     </div>
-    <h3>Referência vertical, método e qualidade dos dados</h3>
+    <h3>Tabela 4. Referência vertical, método e qualidade dos dados</h3>
     <table class="carta-tab" id="cartaQual"><tbody></tbody></table>
-    <h3>Constantes harmônicas principais</h3>
+    <h3>Tabela 5. Constantes harmônicas principais</h3>
     <table class="carta-tab carta-const"><thead><tr><th>Componente</th><th>Velocidade (°/h)</th><th>H (m)</th><th>G local UTC−3 (°)</th><th>G Greenwich (°)</th></tr></thead><tbody id="cartaConst"></tbody></table>
     <p class="carta-note" id="cartaFonte"></p>
   </article>
@@ -266,7 +328,8 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
 (function () {
   const $ = id => document.getElementById(id), A = window.TCApp, TCH = window.TCH;
   const T = TCH.OBS_T, V = TCH.OBS_V, NR = TCH.NR, N = T.length, DAY = 864e5, H3 = 36e5, EPOCH = Date.UTC(2024, 0, 1);
-  const GREEN = '#1b9664', ORANGE = '#eb6834', BLUE = '#3a7bd5', GRAY = '#9aa39c', AMBER = '#d9a441';
+  let ORANGE = '#D55E00', BLUE = '#0072B2'; const GREEN = '#009E73', GRAY = '#8a9590', AMBER = '#E69F00';   // paleta Okabe–Ito (legível por daltônicos)
+  const FONT = '12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif', PL = 'italic 700 14px Charter, "Iowan Old Style", Georgia, serif', AL = 58;
   const Y_MAIN = [-0.2, 4.0], Y_ERR = 60, Y_OV = [0.4, 2.8];   // escalas fixas
   const loc = ms => new Date(ms - 3 * H3), pad = n => String(n).padStart(2, '0');
   const WD = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'], MN = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
@@ -311,7 +374,7 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     $('cmpCsv').onclick = () => exportCsv(false); $('cmpCsvAll').onclick = () => exportCsv(true);
     $('cmpAll').onclick = () => { showAll = !showAll; render(); };
     const pick = (cv, e, W) => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left; return W(x); };
-    $('cmpOv').onpointerdown = e => { const r = $('cmpOv').getBoundingClientRect(), L = 40, R = 8, t = first + (e.clientX - r.left - L) / (r.width - L - R) * (last + DAY - first); len = len; go(t - len * DAY / 2, null); };
+    $('cmpOv').onpointerdown = e => { const r = $('cmpOv').getBoundingClientRect(), L = AL, R = 8, t = first + (e.clientX - r.left - L) / (r.width - L - R) * (last + DAY - first); len = len; go(t - len * DAY / 2, null); };
     $('cmpMonths').onclick = e => { const r = $('cmpMonths').getBoundingClientRect(), i = Math.floor((e.clientX - r.left - mx.L) / mx.bw); if (month && i >= 0 && i < month.list.length) { len = 30; go(month.list[i].t0, null); } };
     const wrap = $('cmpWrap');
     wrap.addEventListener('pointermove', hover); wrap.addEventListener('pointerleave', () => { $('cmpCursor').hidden = true; $('cmpTip').hidden = true; });
@@ -330,6 +393,8 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
 
   function render() {
     const t0 = start, t1 = start + len * DAY, ev = events(t0, t1), s = stats(ev), i0 = lb(t0), i1 = lb(t1);
+    { const m = (getComputedStyle(document.body).backgroundColor.match(/\d+/g) || [255, 255, 255]).map(Number), dark = (m[0] + m[1] + m[2]) / 3 < 110;   // fundo escuro: tons mais claros da mesma paleta
+      ORANGE = dark ? '#F28E4B' : '#D55E00'; BLUE = dark ? '#56B4E9' : '#0072B2'; $('compare').style.setProperty('--c-pm', ORANGE); $('compare').style.setProperty('--c-bm', BLUE); }
     $('cmpDate').value = iso(t0); $('cmpDate').min = iso(first); $('cmpDate').max = iso(last);
     document.querySelectorAll('#cmpPresets [data-p]').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === active));
     document.querySelectorAll('#cmpLen [data-d]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.d === len));
@@ -366,9 +431,16 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     x.lineTo(pts[pts.length - 1][0], pts[pts.length - 1][1]); x.stroke();
   }
   const dot = (x, px, py, r, fill, stroke, tri) => { x.beginPath(); if (tri) { x.moveTo(px, py - r * 1.2); x.lineTo(px + r * 1.1, py + r * .8); x.lineTo(px - r * 1.1, py + r * .8); x.closePath(); } else x.arc(px, py, r, 0, 7); if (fill) { x.fillStyle = fill; x.fill(); } if (stroke) { x.strokeStyle = stroke; x.lineWidth = 1.6; x.stroke(); } };
+  /** moldura de figura científica: eixos, marcas externas, título do eixo y e letra do painel */
+  function frame(x, L, Tp, pw, ph, ytitle, letter) {
+    const ink = INK(); x.save(); x.strokeStyle = ink; x.lineWidth = 1; x.globalAlpha = .85; x.strokeRect(L + .5, Tp + .5, pw, ph); x.restore();
+    if (ytitle) { x.save(); x.translate(13, Tp + ph / 2); x.rotate(-Math.PI / 2); x.textAlign = 'center'; x.fillStyle = col('--chart-text'); x.font = FONT; x.fillText(ytitle, 0, 0); x.restore(); }
+    if (letter) { x.fillStyle = ink; x.font = PL; x.textAlign = 'left'; x.fillText(letter, L + 8, Tp + 17); }
+  }
+  const ytick = (x, L, y, label) => { x.beginPath(); x.moveTo(L - 4, y); x.lineTo(L, y); x.strokeStyle = INK(); x.lineWidth = 1; x.stroke(); x.fillStyle = col('--chart-text'); x.textAlign = 'right'; x.font = FONT; x.fillText(label, L - 7, y + 4); };
   function xticks(t0, t1, x, X, ph, Tp, h, pw) {
     const dayW = pw / len, step = Math.max(1, Math.ceil(56 / dayW)), grid = col('--chart-grid'), txt = col('--chart-text'), wd = dayW * step >= 64;
-    x.textAlign = 'center'; x.fillStyle = txt; x.strokeStyle = grid; x.font = '11px system-ui'; x.lineWidth = 1;
+    x.textAlign = 'center'; x.fillStyle = txt; x.strokeStyle = grid; x.font = FONT; x.lineWidth = 1;
     for (let k = 0, t = t0; t < t1; k++, t += DAY) {
       x.beginPath(); x.moveTo(X(t), Tp); x.lineTo(X(t), Tp + ph); x.stroke();
       if (h && k % step === 0) x.fillText((wd ? WD[loc(t).getUTCDay()] + ' ' : '') + dm(t), X(t + DAY / 2), h - 6);
@@ -382,29 +454,29 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     return (daily = [...map.values()].filter(a => a.n >= 18).map(a => ({ t: a.t, o: m_(a.o / a.n), p: m_(a.p / a.n) })));
   }
   function drawOverview(t0, t1) {
-    const { x, w, h } = setup($('cmpOv')), L = 40, R = 8, Tp = 8, B = 20, pw = w - L - R, ph = h - Tp - B, ta = first, tb = last + DAY, d = dailyData();
+    const { x, w, h } = setup($('cmpOv')), L = AL, R = 8, Tp = 8, B = 22, pw = w - L - R, ph = h - Tp - B, ta = first, tb = last + DAY, d = dailyData();
     const X = t => L + (t - ta) / (tb - ta) * pw, Y = v => Tp + ph - (v - Y_OV[0]) / (Y_OV[1] - Y_OV[0]) * ph, grid = col('--chart-grid'), txt = col('--chart-text');
-    x.font = '11px system-ui'; x.lineWidth = 1; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right';
-    for (const v of [0.5, 1, 1.5, 2, 2.5]) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); x.fillText(fmt(v, 1) + ' m', L - 5, Y(v) + 4); }
+    x.font = FONT; x.lineWidth = 1; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right';
+    for (const v of [0.5, 1, 1.5, 2, 2.5]) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); ytick(x, L, Y(v), fmt(v, 1)); }
     x.fillStyle = 'rgba(150,160,150,.18)'; for (const [a, b] of FIT) x.fillRect(X(a), Tp, X(b) - X(a), ph);
     x.fillStyle = txt; x.textAlign = 'center'; let lm = -1;
     for (let t = first; t < tb; t += DAY) { const dd = loc(t); if (dd.getUTCDate() === 1) { const mo = dd.getUTCFullYear() * 12 + dd.getUTCMonth(); x.strokeStyle = grid; x.beginPath(); x.moveTo(X(t), Tp); x.lineTo(X(t), Tp + ph); x.stroke(); if (mo !== lm && dd.getUTCMonth() % (pw > 760 ? 2 : 3) === 0) x.fillText(MN[dd.getUTCMonth()] + '/' + String(dd.getUTCFullYear()).slice(2), X(t), h - 5); lm = mo; } }
-    x.fillStyle = txt; x.textAlign = 'left'; x.fillText('ajuste (bloco 02)', X(FIT[0][0]) + 4, Tp + 11);
+    x.fillStyle = txt; x.textAlign = 'left'; x.font = FONT; x.fillText('ajuste (bloco 02)', X(FIT[0][0]) + 4, Tp + 13);
     const line = (key, c, wd) => { x.strokeStyle = c; x.lineWidth = wd; x.beginPath(); let pt = null; for (const a of d) { if (pt !== null && a.t - pt <= 2 * DAY) x.lineTo(X(a.t + DAY / 2), Y(a[key])); else x.moveTo(X(a.t + DAY / 2), Y(a[key])); pt = a.t; } x.stroke(); };
-    line('p', GREEN, 1.8); line('o', INK(), 1.3);
+    line('p', GREEN, 1.9); line('o', INK(), 1.3); frame(x, L, Tp, pw, ph, 'Nível médio diário (m)', null);
     x.fillStyle = 'rgba(165,108,52,.16)'; x.strokeStyle = '#a56c34'; x.lineWidth = 1.5; const wx = X(t0), ww = Math.max(3, X(t1) - X(t0)); x.fillRect(wx, Tp, ww, ph); x.strokeRect(wx, Tp, ww, ph);
   }
 
   /* ---------- gráfico principal: curvas + pontos das preamares e baixamares ---------- */
   function drawMain(i0, i1, t0, t1, ev) {
-    const { x, w, h } = setup($('cmpMain')), L = 48, R = 8, Tp = 8, B = 22, pw = w - L - R, ph = h - Tp - B;
+    const { x, w, h } = setup($('cmpMain')), L = AL, R = 8, Tp = 8, B = 24, pw = w - L - R, ph = h - Tp - B;
     const X = t => L + (t - t0) / (t1 - t0) * pw, Y = v => Tp + ph - (v - Y_MAIN[0]) / (Y_MAIN[1] - Y_MAIN[0]) * ph;
     const grid = col('--chart-grid'), txt = col('--chart-text'), ink = INK();
     x.lineWidth = 1; xticks(t0, t1, x, X, ph, Tp, h, pw);
     x.textAlign = 'right'; x.fillStyle = txt; x.strokeStyle = grid;
-    for (let v = 0; v <= 4; v++) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); x.fillText(v + ' m', L - 6, Y(v) + 4); }
+    for (let v = 0; v <= 4; v++) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); ytick(x, L, Y(v), String(v)); }
     x.setLineDash([5, 4]); x.strokeStyle = txt; x.beginPath(); x.moveTo(L, Y(0)); x.lineTo(w - R, Y(0)); x.stroke(); x.setLineDash([]);
-    x.textAlign = 'left'; x.fillText('NR', L + 4, Y(0) - 4);
+    x.font = FONT; x.textAlign = 'left'; x.fillStyle = txt; x.fillText('NR', L + 5, Y(0) - 5);
     // faixas sem registro
     x.fillStyle = 'rgba(150,160,150,.16)'; let ps = t0;
     for (let i = Math.max(i0 - 1, 0); i <= Math.min(i1, N - 1); i++) { if (i > 0 && T[i] - T[i - 1] > 90 * 6e4) { const a = Math.max(T[i - 1], t0), b = Math.min(T[i], t1); if (b > a) x.fillRect(X(a), Tp, X(b) - X(a), ph); } }
@@ -417,22 +489,24 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     // pontos das preamares e baixamares
     for (const e of ev) { const ob = Y(m_(e.obs + NR)), pr = Y(m_(e.prev + NR)); x.strokeStyle = 'rgba(120,120,120,.45)'; x.lineWidth = 1; x.beginPath(); x.moveTo(X(e.t), ob); x.lineTo(X(e.t + e.dt * 6e4), pr); x.stroke(); }
     for (const e of ev) { dot(x, X(e.t), Y(m_(e.obs + NR)), 3.6, ink, null); dot(x, X(e.t + e.dt * 6e4), Y(m_(e.prev + NR)), 3.8, col('--card') || '#fff', GREEN); }
+    frame(x, L, Tp, pw, ph, 'Altura sobre o NR (m)', '(a)');
     G = { L, R, pw, w, t0, t1, i0, i1, ev };
   }
 
   /* ---------- erro de altura: pontos e curvas ---------- */
   function drawErr(t0, t1, ev) {
-    const { x, w, h } = setup($('cmpErr')), L = 48, R = 8, Tp = 8, B = 8, pw = w - L - R, ph = h - Tp - B;
+    const { x, w, h } = setup($('cmpErr')), L = AL, R = 8, Tp = 8, B = 8, pw = w - L - R, ph = h - Tp - B;
     const X = t => L + (t - t0) / (t1 - t0) * pw, Y = v => Tp + ph / 2 - v / Y_ERR * ph / 2, grid = col('--chart-grid'), txt = col('--chart-text');
-    x.font = '11px system-ui'; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right'; x.lineWidth = 1;
-    for (const v of [-60, -30, 0, 30, 60]) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); x.fillText((v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + ' cm', L - 6, Y(v) + 4); }
+    x.font = FONT; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right'; x.lineWidth = 1;
+    for (const v of [-60, -30, 0, 30, 60]) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); ytick(x, L, Y(v), (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v)); }
     for (let t = t0; t < t1; t += DAY) { x.beginPath(); x.moveTo(X(t), Tp); x.lineTo(X(t), Tp + ph); x.stroke(); }
     x.strokeStyle = txt; x.beginPath(); x.moveTo(L, Y(0)); x.lineTo(w - R, Y(0)); x.stroke();
     for (const bm of [false, true]) {
       const c = bm ? BLUE : ORANGE, list = ev.filter(e => e.bm === bm), pts = list.map(e => [X(e.t), Y(Math.max(-Y_ERR, Math.min(Y_ERR, e.prev - e.obs)))]);
       x.strokeStyle = c; x.lineWidth = 1.5; x.globalAlpha = .75; smooth(x, pts); x.globalAlpha = 1;
-      list.forEach((e, i) => { const out = Math.abs(e.prev - e.obs) > Y_ERR; dot(x, pts[i][0], pts[i][1], 3.6, out ? null : c, out ? c : null, bm); });
+      list.forEach((e, i) => { const out = Math.abs(e.prev - e.obs) > Y_ERR; dot(x, pts[i][0], pts[i][1], 3.8, out ? null : c, out ? c : null, bm); });
     }
+    frame(x, L, Tp, pw, ph, 'Erro de altura (cm)', '(b)');
   }
   /* cursor e dica: elementos HTML, sem redesenhar os gráficos */
   function hover(e) {
@@ -463,7 +537,7 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
       list.map(e => { const ph = hm(e.t + e.dt * 6e4), da = e.prev - e.obs; return `<tr><td>${e.type}</td><td>${day(e)}</td><td class="${Math.abs(e.dt) > 25 ? 'bad' : ''}">${ph} (${e.dt === 0 ? 'igual' : sgn(e.dt) + ' min'})</td><td>${fmt(e.obs / 100, 2)} m</td><td>${fmt(e.prev / 100, 2)} m</td><td class="${Math.abs(da) <= 10 ? 'good' : Math.abs(da) > 25 ? 'bad' : ''}">${sgn(da)} cm</td></tr>`; }).join('') + '</tbody>';
   }
   /* ---------- erro mês a mês: pontos e curva ---------- */
-  const mx = { L: 46, bw: 1 };
+  const mx = { L: AL, bw: 1 };
   function monthsData() {
     if (month) return month; const acc = new Map();
     for (const v of EV) { const d = loc(v.t), k = d.getUTCFullYear() * 12 + d.getUTCMonth(), e = v.prev - v.obs; let a = acc.get(k); if (!a) acc.set(k, a = { y: d.getUTCFullYear(), m: d.getUTCMonth(), n: 0, sq: 0, fit: 0, t0: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1) + 3 * H3 }); a.n++; a.sq += e * e; if (inFit(v.t)) a.fit++; }
@@ -472,14 +546,15 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
   }
   function drawMonths() {
     const { x, w, h } = setup($('cmpMonths')), list = monthsData().list, L = mx.L, R = 10, Tp = 16, B = 22, pw = w - L - R, ph = h - Tp - B, bw = pw / list.length, Y = v => Tp + ph - v / 60 * ph;
-    mx.bw = bw; const grid = col('--chart-grid'), txt = col('--chart-text'), cur = loc(start); x.font = '11px system-ui'; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right'; x.lineWidth = 1;
-    for (const v of [0, 20, 40, 60]) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); x.fillText(v + ' cm', L - 5, Y(v) + 4); }
+    mx.bw = bw; const grid = col('--chart-grid'), txt = col('--chart-text'), cur = loc(start); x.font = FONT; x.strokeStyle = grid; x.fillStyle = txt; x.textAlign = 'right'; x.lineWidth = 1;
+    for (const v of [0, 20, 40, 60]) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(w - R, Y(v)); x.stroke(); ytick(x, L, Y(v), String(v)); }
+    frame(x, L, Tp, pw, ph, 'Erro típico (cm)', null);
     const pts = list.map((a, i) => [L + (i + .5) * bw, Y(Math.min(a.rmse, 60))]);
     x.strokeStyle = txt; x.lineWidth = 1.6; x.globalAlpha = .7; smooth(x, pts); x.globalAlpha = 1;
     list.forEach((a, i) => {
       const c = a.kind === 'test' ? GREEN : a.kind === 'fit' ? GRAY : AMBER, sel = a.y === cur.getUTCFullYear() && a.m === cur.getUTCMonth();
       dot(x, pts[i][0], pts[i][1], sel ? 6 : 4.6, c, sel ? INK() : null);
-      x.fillStyle = txt; x.textAlign = 'center'; x.fillText(fmt(a.rmse), pts[i][0], pts[i][1] - 9);
+      x.fillStyle = txt; x.font = FONT; x.textAlign = 'center'; x.fillText(fmt(a.rmse), pts[i][0], pts[i][1] - 9);
       x.fillText(MN[a.m] + (a.m === 0 || i === 0 ? '/' + String(a.y).slice(2) : ''), pts[i][0], h - 6);
     });
   }
@@ -539,20 +614,23 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     ['Incerteza do horário (95 %)', `± ${Math.round(p95(teste.map(e => e.dt)))} min nas preamares e baixamares, em dados fora do ajuste`],
     ['Variação do nível médio', 'o rio desloca o nível médio ao longo do ano; Sa (21,6 cm) e Ssa (8,3 cm) já estão incluídas, mas anos secos ou cheios diferem']];
   $('cartaQual').innerHTML = qual.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('');
-  // esquema dos níveis
-  const lv = [['MHWS', q.MHWS], ['MHWN', q.MHWN], ['MSL', q.Zo], ['MLWN', q.MLWN], ['MLWS', q.MLWS], ['NR', 0]];
-  const top = 20, bot = 380, hi = Math.max(q.MHWS) / 100 + .2, lo = -.25, Y = v => top + (hi - v / 100) / (hi - lo) * (bot - top);
-  let s = `<rect x="150" y="${Y(q.MHWS)}" width="90" height="${Y(0) - Y(q.MHWS)}" fill="var(--sage,#e6ece1)" stroke="var(--line,#ccc)"/>`;
-  s += `<rect x="150" y="${Y(q.MLWS)}" width="90" height="${Y(0) - Y(q.MLWS)}" fill="none"/>`;
-  s += `<text x="195" y="${(Y(q.MHWS) + Y(q.MLWS)) / 2 + 4}" text-anchor="middle" font-size="12" fill="var(--muted,#667)">faixa da maré</text>`;
-  for (const [n, v] of lv) {
-    const y = Y(v), ref = n === 'NR', col = ref ? '#a56c34' : 'var(--forest,#173f35)';
-    s += `<line x1="${ref ? 104 : 150}" x2="${ref ? 300 : 240}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="${ref ? 1.6 : 1.4}" />` +
-      `<text x="${ref ? 98 : 144}" y="${y + 4}" text-anchor="end" font-size="13" font-weight="600" fill="${col}">${n}</text>` +
-      `<text x="${ref ? 306 : 246}" y="${y + 4}" font-size="13" fill="var(--ink,#222)">${m(v)} m</text>`;
+  // esquema dos níveis (figura de revista): eixo em metros, faixas de sizígia e quadratura, níveis rotulados
+  const W = 640, Ht = 500, AX = 92, XR = 300, TOP = 30, BOT = 430, hi = q.MHWS / 100 + .35, lo = -.3, Y = v => TOP + (hi - v / 100) / (hi - lo) * (BOT - TOP);
+  const fnt = 'ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif', ink = 'var(--ink,#222)', mut = 'var(--muted,#667)', ln = 'var(--line,#ccc)', wat = 'var(--water,#2f7283)', och = 'var(--ochre,#9d6c2b)';
+  let s = `<g font-family='${fnt}'>`;
+  for (let v = 0; v <= 3.01; v += .5) { const y = Y(v * 100); s += `<line x1="${AX}" x2="${XR}" y1="${y}" y2="${y}" stroke="${ln}" stroke-width="1"/><line x1="${AX - 6}" x2="${AX}" y1="${y}" y2="${y}" stroke="${ink}" stroke-width="1.2"/><text x="${AX - 11}" y="${y + 5}" text-anchor="end" font-size="18" fill="${mut}">${f(v, 1)}</text>`; }
+  s += `<line x1="${AX}" x2="${AX}" y1="${TOP}" y2="${BOT}" stroke="${ink}" stroke-width="1.4"/><text transform="translate(22 ${(TOP + BOT) / 2}) rotate(-90)" text-anchor="middle" font-size="18" fill="${mut}">Altura acima do NR (m)</text>`;
+  s += `<rect x="130" y="${Y(q.MHWS)}" width="130" height="${Y(q.MLWS) - Y(q.MHWS)}" style="fill:${wat};opacity:.14"/><rect x="152" y="${Y(q.MHWN)}" width="86" height="${Y(q.MLWN) - Y(q.MHWN)}" style="fill:${wat};opacity:.28"/>`;
+  const lv = [['MHWS', q.MHWS, 1.8], ['MHWN', q.MHWN, 1.8], ['MSL', q.Zo, 1.8, '7 4'], ['MLWN', q.MLWN, 1.8], ['MLWS', q.MLWS, 1.8], ['NR', 0, 3]];
+  for (const [n, v, wd, dash] of lv) {
+    const y = Y(v), isNR = n === 'NR', c2 = isNR ? och : ink;
+    s += `<line x1="${AX}" x2="${XR}" y1="${y}" y2="${y}" stroke="${c2}" stroke-width="${wd}" ${dash ? `stroke-dasharray="${dash}"` : ''}/>` +
+      `<text x="${XR + 12}" y="${y + 7}" font-size="22" font-weight="700" fill="${c2}">${n}</text><text x="${XR + 96}" y="${y + 7}" font-size="21" fill="${c2}">${f(v / 100, isNR ? 2 : 2)} m</text>`;
   }
-  s += `<text x="12" y="14" font-size="11" fill="var(--muted,#667)">altura acima do NR (m)</text>`;
-  $('cartaSvg').innerHTML = s;
+  const dim = (x0, a, b, label) => `<line x1="${x0}" x2="${x0}" y1="${Y(a) + 1}" y2="${Y(b) - 1}" stroke="${ink}" stroke-width="1.3" marker-start="url(#arr)" marker-end="url(#arr)"/><text transform="translate(${x0 - 9} ${(Y(a) + Y(b)) / 2}) rotate(-90)" text-anchor="middle" font-size="18" fill="${ink}">${label}</text>`;
+  s += `<defs><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${ink}"/></marker></defs>`;
+  s += dim(540, q.MHWS, q.MLWS, `sizígia ${m(q.MHWS - q.MLWS)} m`) + dim(598, q.MHWN, q.MLWN, `quadratura ${m(q.MHWN - q.MLWN)} m`) + '</g>';
+  $('cartaSvg').setAttribute('viewBox', `0 0 ${W} ${Ht}`); $('cartaSvg').innerHTML = s;
   $('cartaPrint').onclick = () => window.print();
 })();
 </script></body></html>
