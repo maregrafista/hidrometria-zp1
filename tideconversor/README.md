@@ -45,3 +45,13 @@ Extremos detectados independentemente, por segmento, proeminência 0,50 m. Candi
 - Logotipo: https://unipilot.com/imagens/site/icones/logo.png
 
 Não se publicaram as planilhas originais neste diretório. Os dados derivados, coeficientes, fases e estatísticas usados pela interface estão incorporados no HTML. As tabelas CSV acompanham a página. Atualização: 23/10/2026.
+
+## Previsão de nível e coluna d’água
+
+A aba Previsão usa os 1.411 extremos da tábua de Santana de 2026. Entre extremos consecutivos usa interpolação cossenoidal, que passa pelos extremos sem ser uma previsão harmônica contínua oficial. T = T0 + (T1 − T0) × [1 − cos(pi × u)]/2. Não se extrapola além do suporte temporal.
+
+Em Fazendinha, aplica-se H = (T − a)/b − 0,75, apenas de janeiro a outubro de 2026. Não há correção de fase local; os horários PM/BM exibidos são os de Santana. Níveis intermediários e horários locais não têm validação independente; o RMSE da calibração em extremos não é erro validado desta curva horária. Santana cobre janeiro a dezembro de 2026.
+
+A coluna d’água só é calculada quando o usuário informa uma profundidade local, positiva, referida ao mesmo NR: coluna = profundidade ao NR + nível acima do NR. Sem profundidade, mostra-se somente o nível. Ao mudar o local, a profundidade é apagada para não transportá-la automaticamente.
+
+As análises foram organizadas em vistas mutuamente exclusivas (médias/gráfico/tabela) e o método abre em uma janela. A disposição compacta foi verificada em tela de celular de 390 × 740. Em telas muito baixas ou com teclado aberto, a rolagem fica disponível para preservar o acesso aos controles.
