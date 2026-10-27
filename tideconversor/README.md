@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.8 (27/10/2026): menos rolagem
+- **Cabeçalho do celular:** de 148 para 93 px. Os 5 botões das telas ficam em uma só linha (12 px, até 2 linhas de texto).
+- **Espaços:** margens, preenchimentos e intervalos menores em todas as telas, sem sobrepor nem comprimir os textos (alvos de toque de 38 a 46 px).
+- **Leitura do gráfico:** a faixa de leitura virou uma janela sobre o gráfico, que só aparece ao tocar. Ela não ocupa mais espaço fixo.
+- **Resultado no celular (375 × 812):** o painel visível passou de 601 para 663 px. A Previsão cabe em uma tela (1, 2 ou 3 dias). A rolagem de Previsto × observado caiu de 1.882 para 1.701 px e a de Horários de 1.525 para 1.381 px; o Quadro de maré, de 3.949 para 3.754 px.
+
 ## Versão 2.7 (27/10/2026): escala tipográfica
 Revisão só do tamanho das fontes (o conteúdo não mudou). A escala segue a hierarquia de consulta e três referências: o [Material Design 3](https://m3.material.io/styles/typography/type-scale-tokens) (corpo 16/14/12, rótulos 14/12/11, títulos 24 a 32), as [Human Interface Guidelines da Apple](https://developer.apple.com/design/human-interface-guidelines/typography) (corpo 17 pt, mínimo de 11 pt no iOS) e guias de painéis de dados (número principal de 36 a 44 px, textos de eixo de 10 a 12 px).
 
