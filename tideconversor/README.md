@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.6 (27/10/2026)
+- **Previsto × observado:** o quadro "Marés do período" saiu. O botão de 1 dia entrou. O gráfico "Erro mês a mês" ganhou faixas de classificação (muito boa, boa, razoável, fraca), separadores de ano, linha do mês aberto e destaque do mês escolhido.
+- **Previsão:** controles em 2 linhas e gráficos que se ajustam à altura da tela. No celular, a tela inteira cabe sem rolar (1 a 3 dias). Os cartões dos dias viraram uma faixa compacta.
+- **Gráficos de todo o app:** resolução de 3 a 4 pixels por pixel de tela.
+- **Textos:** revisão no estilo ASD-STE100 em português: frases de até 20 palavras e um termo por conceito (erro = previsto − observado).
+
 ## Correção (27/10/2026)
 - **Previsto × observado não rolava.** Desde a atualização de 27/10, o painel dessa aba perdeu a regra de rolagem e o conteúdo abaixo da primeira tela ficava inacessível, no celular e no computador. A regra voltou e a aba Alturas também rola quando o conteúdo passa da tela.
 - **Botão “Hoje”** na aba Previsto × observado: mostra o período que termina hoje (ou o último período com dados).
