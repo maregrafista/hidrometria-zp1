@@ -238,6 +238,8 @@ figure{margin:0}
 /* ===== Previsto × observado, mobile-first ===== */
 #compare .cx-period{padding:12px 14px;margin:10px 0;display:grid;gap:10px}
 #compare .cx-nav{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;gap:8px}
+#compare .cx-row2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+#compare .cx-today{border:1.5px solid var(--forest,#173f35);background:var(--card);color:var(--forest,#173f35);font:700 14px ui-sans-serif,system-ui,sans-serif;padding:0 18px;min-height:46px}
 #compare .cx-nav .step{height:52px;width:auto;border:0;background:var(--sage);font-size:24px;color:inherit}
 #compare .cx-date{display:flex;flex-direction:column;justify-content:center;border:1.5px solid var(--line);background:var(--paper);padding:3px 12px;min-width:0}
 #compare .cx-date span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -299,6 +301,7 @@ figure{margin:0}
   #compare .cx-wrap{max-height:none;overflow:visible}
 }
 
+#compare:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#compare>*{flex:none}#compare .sectionhead{margin-top:0}#converter{overflow-y:auto;-webkit-overflow-scrolling:touch}
 #history,#historyTab,#lunar{display:none!important}#lag:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#lag>*{flex:none}#lag .sectionhead{margin-top:0}#lag .method-button{display:none!important}#forecast .method-button,#compare .method-button,#carta .method-button{display:none!important}#compare>*{flex:none}#carta:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#carta>*{flex:none}#forecast:not([hidden]){display:block;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 8px 24px 0;-webkit-overflow-scrolling:touch}#forecast>*{flex:none}#forecast .sectionhead{margin-top:0}#carta .sectionhead{margin-top:0}#compare .sectionhead{margin-top:0}
 .forecast-controls select{font:inherit}
 #quadroCard table{width:100%;border-collapse:collapse;font-size:13.5px}#quadroCard th,#quadroCard td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}#quadroCard th:first-child,#quadroCard td:first-child{text-align:left}
@@ -355,7 +358,7 @@ figure{margin:0}
       <label class="cx-date"><span>Primeiro dia</span><input type="date" id="cmpDate" aria-label="Primeiro dia"></label>
       <button class="step" id="cmpNext" type="button" aria-label="Próximo período">›</button>
     </div>
-    <div class="cx-seg" id="cmpLen" role="group" aria-label="Duração do período"></div>
+    <div class="cx-row2"><div class="cx-seg" id="cmpLen" role="group" aria-label="Duração do período"></div><button class="cx-today" id="cmpToday" type="button">Hoje</button></div>
     <details class="cx-more" id="cmpMore"><summary>Mais opções</summary>
       <div class="cx-opts">
         <label class="cx-f">Exemplo de período<select id="cmpPresets" aria-label="Exemplos de período"></select></label>
@@ -570,11 +573,12 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
   }
   function build() {
     $('cmpPresets').innerHTML = '<option value="">Escolha um exemplo</option>' + PRESETS.map(p => `<option value="${p.id}">${p.label}</option>`).join('');
-    $('cmpLen').innerHTML = LENS.map(d => `<button class="cx-b" data-d="${d}" aria-pressed="false" type="button">${d} dias</button>`).join('');
+    $('cmpLen').innerHTML = LENS.map(d => `<button class="cx-b" data-d="${d}" aria-pressed="false" aria-label="${d} dias" type="button">${d} d</button>`).join('');
     $('cmpPresets').onchange = e => { const p = PRESETS.find(x => x.id === e.target.value); if (!p) return; len = 7; go(p.start ? parseLocal(p.start) : last - 6 * DAY, p.id); };
     $('cmpLen').onclick = e => { const b = e.target.closest('[data-d]'); if (b) { len = +b.dataset.d; go(start, active); } };
     $('cmpPrev').onclick = () => go(start - len * DAY, null);
     $('cmpNext').onclick = () => go(start + len * DAY, null);
+    $('cmpToday').onclick = () => { const td = dayStart(Date.now()); go(td - (len - 1) * DAY, null); $('cmpRead').textContent = td > last ? 'Hoje ainda não tem observações. O app mostra o último período com dados.' : 'Período que termina hoje.'; };
     $('cmpDate').onchange = () => { if ($('cmpDate').value) go(parseLocal($('cmpDate').value), null); };
     const syncD = () => document.querySelectorAll('#cmpDatum [data-d]').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === DATUM()));
     $('cmpDatum').onclick = e => { const b = e.target.closest('[data-d]'); if (b) setDatum(b.dataset.d); };
@@ -583,7 +587,7 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     $('cmpAll').onclick = () => { showAll = !showAll; render(); };
     // navegador de todo o registro: toque ou arraste
     const ov = $('cmpOv'), ovGo = e => { const r = ov.getBoundingClientRect(), L = AL(), R = 8, t = first + (e.clientX - r.left - L) / (r.width - L - R) * (last + DAY - first); cancelAnimationFrame(raf); raf = requestAnimationFrame(() => go(t - len * DAY / 2, null)); };
-    let dr = false; ov.addEventListener('pointerdown', e => { dr = true; try { ov.setPointerCapture(e.pointerId); } catch {} ovGo(e); }); ov.addEventListener('pointermove', e => { if (dr) ovGo(e); }); ov.addEventListener('pointerup', () => dr = false); ov.addEventListener('pointercancel', () => dr = false); ov.style.touchAction = 'none';
+    let dr = false; ov.addEventListener('pointerdown', e => { dr = true; try { ov.setPointerCapture(e.pointerId); } catch {} ovGo(e); }); ov.addEventListener('pointermove', e => { if (dr) ovGo(e); }); ov.addEventListener('pointerup', () => dr = false); ov.addEventListener('pointercancel', () => dr = false); ov.style.touchAction = 'pan-y';
     $('cmpMonths').onclick = e => { const r = $('cmpMonths').getBoundingClientRect(), i = Math.floor((e.clientX - r.left - mx.L()) / mx.bw); if (month && i >= 0 && i < month.list.length) { len = 30; go(month.list[i].t0, null); window.scrollTo && 0; } };
     const wrap = $('cmpWrap'); let dd = false;
     wrap.addEventListener('pointerdown', e => { dd = true; try { wrap.setPointerCapture(e.pointerId); } catch {} read(e); }); wrap.addEventListener('pointermove', e => { if (dd || e.pointerType === 'mouse') read(e); });
