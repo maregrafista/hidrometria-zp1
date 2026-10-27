@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Atualização da base (27/10/2026)
+- Série RLS atualizada até 27/10/2026 10:50 (arquivo .xls até 23/10 e .csv de 09 a 27/10; 186.332 leituras). Os valores repetidos nos dois arquivos são idênticos.
+- **Previsto × observado com o mínimo de informação:** as preamares e baixamares observadas passaram a ser extraídas de todo o registro, também dos trechos curtos ou de amostragem irregular (antes só dos blocos contínuos de 32 dias). Sobem de 2.088 para 2.615; 68 são de registro irregular (amostras mais espaçadas, marcadas com ○) e têm incerteza maior.
+- Picos espúrios do registro irregular (a partir de 01/08/2026) foram removidos pela diferença em relação à mediana local do resíduo (117 amostras). Scripts em `analise/atualizacao_2026-10-27/`.
+- A calibração mensal de alturas (aba Alturas) não foi recalculada.
+
 ## Novidades da v2.2 (23/10/2026)
 - **Somente esta versão é atualizada daqui em diante** (hidrometria-zp1/tideconversor). Horários remodelado (sizígia e quadratura sempre visíveis, cartões do mês, gráfico e tabela de todos os meses, resolução ampliada como padrão); Previsão por 1, 2 ou 3 dias sem campo de hora; unidades em “m”; Quadro com “Estação” e a Tabela 5 com Amplitude e Fase.
 - **Telas simplificadas:** a Previsão virou uma curva do dia (toque ou arraste para escolher a hora) com a leitura do nível e as próximas preamar e baixamar, sem coluna d’água; o Previsto × observado cabe em quase uma tela, com todos os gráficos; a Série histórica foi removida; no Quadro de maré, a velocidade das constantes tem duas casas decimais e a Tabela 5 é centralizada.
