@@ -2,6 +2,20 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.7 (27/10/2026): escala tipográfica
+Revisão só do tamanho das fontes (o conteúdo não mudou). A escala segue a hierarquia de consulta e três referências: o [Material Design 3](https://m3.material.io/styles/typography/type-scale-tokens) (corpo 16/14/12, rótulos 14/12/11, títulos 24 a 32), as [Human Interface Guidelines da Apple](https://developer.apple.com/design/human-interface-guidelines/typography) (corpo 17 pt, mínimo de 11 pt no iOS) e guias de painéis de dados (número principal de 36 a 44 px, textos de eixo de 10 a 12 px).
+
+| Nível | Uso | Celular | Computador |
+|---|---|---|---|
+| 1 | Número principal (erro típico, nível convertido) | 36 a 41 px | 44 px |
+| 2 | Título da tela | 20 px | 22 a 24 px |
+| 3 | Valores de apoio (métricas, cartões) | 18 a 24 px | 18 a 28 px |
+| 4 | Corpo e frases | 14 a 14,5 px | 15 px |
+| 5 | Texto de apoio, legendas, botões | 12 a 13,5 px | 12,5 a 14 px |
+| 6 | Rótulos em maiúsculas e eixos dos gráficos | 11 a 12 px | 11,5 a 12 px |
+
+Mudanças principais: o número do erro típico caiu de 52–68 px para 36–44 px; os títulos de tela ficaram em 20–24 px (antes 17 px no celular); o subtítulo da marca subiu de 8 para 10 px; a barra de leitura do gráfico e os controles ficaram mais baixos, o que devolve cerca de 90 px de tela ao gráfico no celular. Nenhum texto fica abaixo de 11 px.
+
 ## Versão 2.6 (27/10/2026)
 - **Previsto × observado:** o quadro "Marés do período" saiu. O botão de 1 dia entrou. O gráfico "Erro mês a mês" ganhou faixas de classificação (muito boa, boa, razoável, fraca), separadores de ano, linha do mês aberto e destaque do mês escolhido.
 - **Previsão:** controles em 2 linhas e gráficos que se ajustam à altura da tela. No celular, a tela inteira cabe sem rolar (1 a 3 dias). Os cartões dos dias viraram uma faixa compacta.
