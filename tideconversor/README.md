@@ -3,6 +3,7 @@
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
 ## Atualização da base (27/10/2026)
+- **Referência das alturas:** a Previsão e o Previsto × observado têm o seletor “Acima do NR / Acima do zero da régua” (a escolha vale nas duas telas; a diferença é o NR de 66,3 cm). A Previsão passou a mostrar também a curva observada e, nas preamares e baixamares do dia, o horário e a altura observados.
 - Série RLS atualizada até 27/10/2026 10:50 (arquivo .xls até 23/10 e .csv de 09 a 27/10; 186.332 leituras). Os valores repetidos nos dois arquivos são idênticos.
 - **Previsto × observado com o mínimo de informação:** as preamares e baixamares observadas passaram a ser extraídas de todo o registro, também dos trechos curtos ou de amostragem irregular (antes só dos blocos contínuos de 32 dias). Sobem de 2.088 para 2.615; 68 são de registro irregular (amostras mais espaçadas, marcadas com ○) e têm incerteza maior.
 - Picos espúrios do registro irregular (a partir de 01/08/2026) foram removidos pela diferença em relação à mediana local do resíduo (117 amostras). Scripts em `analise/atualizacao_2026-10-27/`.
