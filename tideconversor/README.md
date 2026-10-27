@@ -2,6 +2,10 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.9 (27/10/2026): símbolos de fase lunar
+
+- Horários: sizígia usa ● (lua nova) e ○ (lua cheia); quadratura usa ◐ (quarto crescente) e ◑ (quarto minguante). Convenção de tábuas náuticas; glifos exatos da DHN não verificados na fonte oficial.
+
 ## Versão 2.8 (27/10/2026): menos rolagem
 - **Cabeçalho do celular:** de 148 para 93 px. Os 5 botões das telas ficam em uma só linha (12 px, até 2 linhas de texto).
 - **Espaços:** margens, preenchimentos e intervalos menores em todas as telas, sem sobrepor nem comprimir os textos (alvos de toque de 38 a 46 px).
