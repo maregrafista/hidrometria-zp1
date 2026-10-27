@@ -2,6 +2,20 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.0 (27/10/2026): filtro de qualidade dos dados
+
+Motivo: de 11/08 a 27/10/2026 o registrador falhou com frequência. A cobertura caiu para 22–27 % por mês (antes: 95–100 %). A maior lacuna foi de 9,2 dias. Os erros de horário subiram de ~10 min para 25–30 min, sem causa na previsão.
+
+Regras do filtro (arquivo `data/harm.js`, campos `qc`, `qc_regras`, `lagq`):
+1. Picos espúrios: mediana móvel de 3 h do resíduo; desvio > 30 cm sai (2 passagens).
+2. Série horária: só interpola entre leituras com até 30 min de intervalo (antes: 60 min). Removeu 504 horas, todas depois de 01/08/2026.
+3. Preamar e baixamar: só entra nas estatísticas se não houver lacuna maior que 15 min em 90 min antes e depois do extremo. Reprovadas: 159 de 2.615 marés (símbolo ○).
+4. Aba Horários: mesmo critério (109 de 943 pares reprovados). Média só com 5 pares ou mais; * de 5 a 9 pares. O filtro pode ser desligado para comparar.
+
+Resultado (marés válidas): erro de horário volta ao normal (desvio ~11 min). O desvio de nível continua: tendência de −11 a −17 cm em ago–out/2026, contra −1 a −5 cm de jan a jul. Esse desvio aparece também nas marés válidas. Não vem de falha de comunicação. Causas possíveis: vazão baixa do rio, efeitos meteorológicos ou deslocamento do sensor. Confira com leitura de régua.
+
+Aba Previsto × observado: quadro "Qualidade dos dados" (leituras, maior lacuna, marés válidas, tendência, erro típico), CSV com coluna de qualidade.
+
 ## Versão 2.9 (27/10/2026): símbolos de fase lunar
 
 - Horários: sizígia usa ● (lua nova) e ○ (lua cheia); quadratura usa ◐ (quarto crescente) e ◑ (quarto minguante). Convenção de tábuas náuticas; glifos exatos da DHN não verificados na fonte oficial.
