@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.4 (27/10/2026)
+- **Textos em português simplificado, no estilo da ASD-STE100.** A ASD-STE100 é uma norma de inglês técnico; aqui o app segue os mesmos princípios em português do Brasil: frases curtas (até 20 palavras nas instruções e 25 nas descrições), voz ativa, tempo presente, uma ideia por frase, um termo para cada conceito (nível de redução, NR; preamar; baixamar; zero da régua; previsto; observado; diferença = previsto − observado) e unidades abreviadas (m, cm, min). Os termos e os limites seguem a NORMAM-501/DHN e a IHO S-44 (6.1.0).
+- **Previsão:** voltou ao modelo anterior ao estilo HIDRO-Telemetria (1, 2 ou 3 dias, referência NR ou zero da régua). O erro agora aparece em um gráfico auxiliar (b), logo abaixo do gráfico principal (a), com o mesmo eixo de tempo. A curva do erro no eixo direito saiu.
+- **Gráficos:** resolução mínima de 2 pixels por pixel de tela, para linhas e textos nítidos.
+- Revisão de todas as telas no computador e no celular; sem erros no console e sem rolagem lateral.
+
 ## Atualização da base (27/10/2026)
 - **Previsão no estilo do HIDRO-Telemetria (ANA):** período De/A com atalhos (1, 2, 3, 7 dias, 1, 3 e 6 meses e Hoje), curva prevista e observada (pontos e linha), eixo direito invertido com **barras da diferença previsto − observado** (como a chuva no HIDRO), navegador inferior com alças, “Mostrar tudo”, leitura ao passar o cursor, tabela opcional e CSV. Acima de 62 dias o gráfico passa a médias diárias.
 - **Referência das alturas:** a Previsão e o Previsto × observado têm o seletor “Acima do NR / Acima do zero da régua” (a escolha vale nas duas telas; a diferença é o NR de 66,3 cm). A Previsão passou a mostrar também a curva observada e, nas preamares e baixamares do dia, o horário e a altura observados.
