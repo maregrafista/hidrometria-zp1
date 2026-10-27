@@ -236,8 +236,8 @@ figure{margin:0}
   <figure class="card fig fc-card">
     <p class="fc-readout" id="fcRead" aria-live="polite">Toque ou passe o cursor sobre a curva para ver a hora e a altura.</p>
     <canvas id="fcChart" height="320" aria-label="Curva de maré"></canvas>
-    <div class="cmp-legend"><span><i style="background:#009E73"></i>Previsto</span><span><i style="background:var(--ink,#1c1c1c)"></i>Observado (régua)</span><span><i class="dot" style="background:var(--c-pm,#D55E00)"></i>preamar</span><span><i class="dot" style="background:var(--c-bm,#0072B2)"></i>baixamar</span></div>
-    <figcaption class="fig-cap">Observado só onde há registro da régua (Fazendinha). Linha tracejada: hora atual.</figcaption>
+    <div class="cmp-legend"><span><i style="background:#009E73"></i>Previsto</span><span><i style="background:var(--ink,#1c1c1c)"></i>Observado (régua)</span><span><i style="background:var(--ochre,#a56c34)"></i>Previsto − observado (eixo direito, cm)</span><span><i class="dot" style="background:var(--c-pm,#D55E00)"></i>preamar</span><span><i class="dot" style="background:var(--c-bm,#0072B2)"></i>baixamar</span></div>
+    <figcaption class="fig-cap">Observado só onde há registro da régua (Fazendinha). Eixo direito: quanto o previsto está acima (+) ou abaixo (−) do observado, em cm. Linha tracejada: hora atual.</figcaption>
   </figure>
   <div class="fc-days" id="fcDayList"></div>
   <button class="textbutton" id="fcCsv" type="button">Baixar CSV (a cada 15 min)</button>
@@ -743,7 +743,7 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
 (function () {
   const $ = id => document.getElementById(id), HOST = window.TCHost, A = window.TCApp, TCH = window.TCH;
   if (!HOST || !$('fcChart')) return;
-  const L = 58, R = 10, TP = 12, BT = 26, DAY = 864e5, H3 = 36e5, NRM = TCH.NR / 100, EPOCH = Date.UTC(2024, 0, 1);
+  const L = 58, TP = 12, BT = 26, DAY = 864e5, H3 = 36e5, NRM = TCH.NR / 100, EPOCH = Date.UTC(2024, 0, 1);
   const FONT = '12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif', GREEN = '#009E73';
   const pad = n => String(n).padStart(2, '0'), fmt = (v, n = 2) => A.fmt(v, n);
   const clock = ms => { const d = new Date(ms - 3 * H3); return pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()); };
@@ -753,7 +753,8 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
   const DATUM = () => window.__tcDatum === 'rg' ? 'rg' : 'nr';
   const setDatum = d => { window.__tcDatum = d; try { localStorage.setItem('tcDatum', d); } catch {} document.dispatchEvent(new Event('tcdatum')); };
   if (!window.__tcDatum) { let d = 'nr'; try { d = localStorage.getItem('tcDatum') === 'rg' ? 'rg' : 'nr'; } catch {} window.__tcDatum = d; }
-  let G = null, N = 1, mark = null;
+  let G = null, N = 1, mark = null, R = 58;   // R: margem direita (eixo da diferença previsto − observado, só em Fazendinha)
+  const DF = 60;                              // eixo direito: ±60 cm
   const isSan = () => $('fcLoc').value === 'san';
   const off = () => (!isSan() && DATUM() === 'rg') ? NRM : 0;                 // soma sobre a altura acima do NR
   const yr = () => (!isSan() && DATUM() === 'rg') ? [0.4, 4.3] : [-0.2, 3.6];
@@ -778,13 +779,13 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     draw({ q, ext });
   }
   function draw(d) {
-    const c = $('fcChart'), r = devicePixelRatio || 1, w = c.clientWidth, h = Math.round((innerHeight >= 760 ? 320 : innerHeight >= 640 ? 280 : 240)); c.setAttribute('height', h);
+    R = isSan() ? 10 : 58; const c = $('fcChart'), r = devicePixelRatio || 1, w = c.clientWidth, h = Math.round((innerHeight >= 760 ? 320 : innerHeight >= 640 ? 280 : 240)); c.setAttribute('height', h);
     c.width = Math.round(w * r); c.height = Math.round(h * r); const x = c.getContext('2d'); x.setTransform(r, 0, 0, r, 0, 0); x.clearRect(0, 0, w, h);
     const ink = css('--ink') || '#222', txt = css('--chart-text') || '#667', grid = css('--chart-grid') || '#ddd', pw = w - L - R, ph = h - TP - BT, T = N * 1440, Y = yr();
     const dark = (getComputedStyle(document.body).backgroundColor.match(/\d+/g) || [255, 255, 255]).slice(0, 3).reduce((a, b) => a + +b, 0) / 3 < 110, PM = dark ? '#F28E4B' : '#D55E00', BM = dark ? '#56B4E9' : '#0072B2';
     const X = m => L + m / T * pw, Yv = v => TP + ph - (v - Y[0]) / (Y[1] - Y[0]) * ph, step = N === 1 ? 180 : N === 2 ? 360 : 720;
     x.font = FONT; x.lineWidth = 1; x.textAlign = 'right';
-    for (let v = Math.ceil(Y[0] * 2) / 2; v <= Y[1] + 1e-9; v += .5) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Yv(v)); x.lineTo(w - R, Yv(v)); x.stroke(); x.strokeStyle = ink; x.beginPath(); x.moveTo(L - 4, Yv(v)); x.lineTo(L, Yv(v)); x.stroke(); x.fillStyle = txt; x.fillText(fmt(v, 1), L - 7, Yv(v) + 4); }
+    for (let v = Math.ceil(Y[0] * 2) / 2; v <= Y[1] + 1e-9; v += .5) { x.strokeStyle = grid; x.beginPath(); x.moveTo(L, Yv(v)); x.lineTo(w - R, Yv(v)); x.stroke(); x.strokeStyle = ink; x.beginPath(); x.moveTo(L - 4, Yv(v)); x.lineTo(L, Yv(v)); x.stroke(); x.fillStyle = txt; x.fillText(fmt(Math.abs(v) < 1e-9 ? 0 : v, 1), L - 7, Yv(v) + 4); }
     x.textAlign = 'center'; for (let m = 0; m <= T; m += step) { const day = m % 1440 === 0; x.strokeStyle = day ? txt : grid; x.beginPath(); x.moveTo(X(m), TP); x.lineTo(X(m), TP + ph); x.stroke(); x.fillStyle = txt; if (m < T || N === 1) x.fillText(pad((m / 60) % 24) + 'h', X(m), h - 8); }
     if (d && N > 1) { for (let k = 0; k < N; k++) { x.fillStyle = ink; x.font = '600 12px ui-sans-serif, system-ui, sans-serif'; x.fillText(dlab(d.q.day + k * DAY + 6e4), X(k * 1440 + 720), TP + 14); } x.font = FONT; }
     const sanLbl = d && d.q.loc === 'san';
@@ -797,6 +798,15 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
     for (let m = 0; m <= T; m += N === 1 ? 5 : 10) { const v = valueP(q.day + m * 6e4, q.loc); if (v === null) { f = true; continue; } if (f) { x.moveTo(X(m), Yv(v)); f = false; } else x.lineTo(X(m), Yv(v)); } x.stroke();
     // observado (curva preta, quebra nas lacunas)
     if (!sanLbl) { const i0 = lbT(q.day), i1 = lbT(q.day + T * 6e4); x.strokeStyle = ink; x.lineWidth = 1.6; x.beginPath(); let prev = -1; for (let i = i0; i < i1; i++) { const m = (OT[i] - q.day) / 6e4; if (prev >= 0 && OT[i] - OT[prev] <= 90 * 6e4) x.lineTo(X(m), Yv(ob(i))); else x.moveTo(X(m), Yv(ob(i))); prev = i; } x.stroke(); }
+    if (!sanLbl) {
+      const oc = css('--ochre') || '#a56c34', Yd = dv => TP + ph / 2 - Math.max(-DF, Math.min(DF, dv)) / DF * ph / 2, i0 = lbT(q.day), i1 = lbT(q.day + T * 6e4);
+      x.setLineDash([2, 3]); x.strokeStyle = oc; x.lineWidth = 1; x.beginPath(); x.moveTo(L, Yd(0)); x.lineTo(w - R, Yd(0)); x.stroke(); x.setLineDash([]);
+      x.strokeStyle = oc; x.lineWidth = 1.8; x.beginPath(); let pv = -1;
+      for (let i = i0; i < i1; i++) { const m = (OT[i] - q.day) / 6e4, dv = (valueP(OT[i], q.loc) - ob(i)) * 100; if (pv >= 0 && OT[i] - OT[pv] <= 90 * 6e4) x.lineTo(X(m), Yd(dv)); else x.moveTo(X(m), Yd(dv)); pv = i; } x.stroke();
+      x.font = FONT; x.fillStyle = oc; x.textAlign = 'left';
+      for (const v of [-60, -30, 0, 30, 60]) { x.strokeStyle = oc; x.beginPath(); x.moveTo(w - R, Yd(v)); x.lineTo(w - R + 4, Yd(v)); x.stroke(); x.fillText((v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), w - R + 8, Yd(v) + 4); }
+      x.save(); x.translate(w - 12, TP + ph / 2); x.rotate(Math.PI / 2); x.textAlign = 'center'; x.fillText('Previsto − observado (cm)', 0, 0); x.restore();
+    }
     const nw = (Date.now() - q.day) / 6e4; if (nw >= 0 && nw <= T) { x.setLineDash([2, 3]); x.strokeStyle = txt; x.lineWidth = 1; x.beginPath(); x.moveTo(X(nw), TP); x.lineTo(X(nw), TP + ph); x.stroke(); x.setLineDash([]); x.fillStyle = txt; x.textAlign = 'left'; x.fillText('agora', X(nw) + 4, TP + (N > 1 ? 30 : 12)); }
     x.textAlign = 'center';
     for (const e of ext) { const px = X((e.ts - q.day) / 6e4), py = Yv(e.h), col = e.type === 'PM' ? PM : BM; x.beginPath(); x.arc(px, py, 4.5, 0, 7); x.fillStyle = col; x.fill(); x.fillStyle = ink; x.font = '600 12px ui-sans-serif, system-ui, sans-serif'; x.fillText(clock(e.ts), Math.max(L + 20, Math.min(w - R - 20, px)), e.type === 'PM' ? py - 10 : py + 20); x.font = FONT; }
