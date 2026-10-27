@@ -2,6 +2,9 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 2.5 (27/10/2026)
+- **Previsto × observado reescrito para o celular.** Ordem da tela: período (setas, primeiro dia e 3, 7, 15 ou 30 dias), resultado (erro típico em número grande, classificação e frase curta), gráficos (a) e (b) com leitura por toque, navegador de todo o registro, marés em cartões, erro mês a mês e CSV. Exemplos de período e referência (NR ou zero da régua) ficam em “Mais opções”. No computador, o mesmo conteúdo usa duas colunas. A lista de marés mostra, no máximo, as 400 mais recentes; o CSV traz todas.
+
 ## Versão 2.4 (27/10/2026)
 - **Textos em português simplificado, no estilo da ASD-STE100.** A ASD-STE100 é uma norma de inglês técnico; aqui o app segue os mesmos princípios em português do Brasil: frases curtas (até 20 palavras nas instruções e 25 nas descrições), voz ativa, tempo presente, uma ideia por frase, um termo para cada conceito (nível de redução, NR; preamar; baixamar; zero da régua; previsto; observado; diferença = previsto − observado) e unidades abreviadas (m, cm, min). Os termos e os limites seguem a NORMAM-501/DHN e a IHO S-44 (6.1.0).
 - **Previsão:** voltou ao modelo anterior ao estilo HIDRO-Telemetria (1, 2 ou 3 dias, referência NR ou zero da régua). O erro agora aparece em um gráfico auxiliar (b), logo abaixo do gráfico principal (a), com o mesmo eixo de tempo. A curva do erro no eixo direito saiu.
