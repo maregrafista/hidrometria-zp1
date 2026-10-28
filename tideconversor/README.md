@@ -2,6 +2,11 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.1 (28/10/2026): botão de referência e leitura sem sobreposição
+
+- Previsto × observado: botão "Acima do NR" / "Acima do zero da régua" visível no topo (antes ficava em "Mais opções"). A escolha vale para todas as telas.
+- Previsão e Previsto × observado: a leitura do ponto tocado fica em uma faixa fixa acima do gráfico. Ela não cobre mais a curva e não desloca o gráfico.
+
 ## Versão 3.0 (27/10/2026): filtro de qualidade dos dados
 
 Motivo: de 11/08 a 27/10/2026 o registrador falhou com frequência. A cobertura caiu para 22–27 % por mês (antes: 95–100 %). A maior lacuna foi de 9,2 dias. Os erros de horário subiram de ~10 min para 25–30 min, sem causa na previsão.
