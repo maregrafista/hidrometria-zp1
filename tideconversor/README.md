@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.5 (28/10/2026): NR do Curuá por nivelamento
+
+- O NR do Curuá (21,8 cm acima do zero da régua) vem de nivelamento da UNIPILOT. O Quadro de maré passa a dizer isso.
+- Comparação com a ficha F-41 da DHN (estação 10656, atualizada em 05/08/2019): NR de 16,0 cm, S0 = 267,4 cm e Z0 = 251,4 cm, com 365 dias de 2018. O NR da UNIPILOT é 5,8 cm maior que o da DHN. Os dois ficam no Quadro de maré.
+- O app não guarda os dados do nivelamento (RN usadas, data, fechamento). A ficha da UNIPILOT segue pendente.
+
 ## Versão 3.4 (28/10/2026): novo ajuste do Curuá
 
 - O ajuste do Curuá passa a usar 365 dias de 2025 (01/01/2025 a 31/12/2025), com Sa e Ssa. O ajuste anterior incluía a seca de 2024 (jun/2024 a mai/2025).
