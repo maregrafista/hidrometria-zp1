@@ -17,7 +17,7 @@ EST = {
   'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2026-08-01', recalcula_antigos=False),
   'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True),
 }
-VERSAO = '3.6'
+VERSAO = '3.7'
 
 def ler(path):
     txt = open(path, encoding='utf-8-sig', errors='replace').read()
@@ -85,7 +85,7 @@ def processa(nome, cfg):
         return np.diff(np.r_[ta - WIN, xs, ta + WIN]).max() / 60 if len(xs) else 9999
     evn = [e[:5] + [int(t[0] <= E0 + e[0] * 60 <= t[-1] and gapf(E0 + e[0] * 60) > GAP)] for e in ev]
     print(f'[{nome}] marés {len(evn)}; reprovadas {sum(e[5] for e in evn)}')
-    d = pd.DataFrame(evn, columns=['m', 'ty', 'o', 'p', 'dt', 'lr']); d['mo'] = (pd.Timestamp('2024-01-01') + pd.to_timedelta(d.m, unit='m')).dt.strftime('%Y-%m'); d['eh'] = (d.o - d.p) / 10
+    d = pd.DataFrame(evn, columns=['m', 'ty', 'o', 'p', 'dt', 'lr']); d['mo'] = (pd.Timestamp('2024-01-01') + pd.to_timedelta(d.m, unit='m')).dt.strftime('%Y-%m'); d['eh'] = (d.p - d.o) / 10
     a = all_.copy(); a['mo'] = a.t.dt.strftime('%Y-%m'); a['slot'] = a.t.dt.floor(f"{cfg['passo']}min"); qc = []
     for mo, gp in a.groupby('mo'):
         p = pd.Period(mo); s0 = max(p.start_time, a.t.min()); s1 = min(p.end_time, a.t.max()); tot = int((s1 - s0).total_seconds() // (cfg['passo'] * 60)) + 1

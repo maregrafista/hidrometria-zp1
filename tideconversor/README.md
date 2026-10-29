@@ -2,6 +2,15 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.7 (28/10/2026): Curuá com a série de 2017 a 2026
+
+- Nova base do Curuá: coluna "Radar" da planilha "Mare Curua - 2017 a 2026" (sem NR, em m acima do zero do sensor). Três séries: 09/11/2017–11/01/2020, 01/09/2022–28/03/2026 e uma cópia de 02/06/2024–28/03/2026, idêntica à anterior (diferença máxima 0,000 m).
+- Série usada (a de menor erro): 2017–2019 limpa (até 19/10/2019) + 2022–2026 limpa. Ficaram de fora: 20/10/2019 a 11/01/2020 (falha do sensor, erro de 60 cm contra 12 cm) e 4 a 97 pontos com salto maior que 0,30 m. O erro em 2018–2019 é de 12,5 a 13,5 cm. Na série de 2022–2026, é de 11,4 a 13,7 cm.
+- Ajuste harmônico com 1.968 dias (o maior conjunto possível, 5,4 anos), 63 componentes, Sa = 10,9 cm e Ssa = 7,3 cm. Nível médio S0 = 274,2 cm. Com o NR de 21,8 cm, o nível médio fica 2,524 m acima do NR. A DHN publica 2,52 m. O NR da DHN (16,0 cm) dá Z0 = 2,514 m.
+- Validação independente (ajuste até 28/03/2025, teste de 29/03/2025 a 28/03/2026, 1.409 marés): erro típico de 16,3 cm nas preamares e baixamares, tendência de −11,3 cm e erro de horário de −4,8 ± 12 min. O erro sem a tendência é de 11,7 cm. A tendência vem do nível médio, que subiu cerca de 8 cm em 2025–2026.
+- A aba Previsto × observado cobre de 2017 a 2026. O erro típico de todo o registro é de 13,8 cm. A tábua da DHN × observado continua em 2026.
+- Correção: o quadro de qualidade dos dados mostrava a tendência como observado − previsto. Agora mostra previsto − observado, como o resto do app.
+
 ## Versão 3.6 (28/10/2026): tábua da DHN × observado no Curuá
 
 - A aba Previsto × observado do Curuá compara a tábua da DHN 2026 (Igarapé Grande do Curuá, 123 componentes, Carta 222) com o observado e com esta previsão. O cartão "Tábua da DHN × observado" mostra erro típico, tendência, erro sem a tendência, erro em 90 % das marés e erro de horário, para o período escolhido e para todo o registro de 2026. Os losangos rosa no gráfico são as marés da tábua. O CSV ganha as colunas da tábua.
