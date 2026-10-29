@@ -1,0 +1,58 @@
+name: Atualizar dados da maré
+
+on:
+  schedule:
+    - cron: '20 */6 * * *'   # a cada 6 h (UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Instalar dependências
+        run: |
+          pip install numpy pandas playwright
+          python -m playwright install --with-deps chromium
+      - name: Baixar dados do Hydromet Cloud
+        env:
+          HYDROMET_USER: ${{ secrets.HYDROMET_USER }}
+          HYDROMET_PASS: ${{ secrets.HYDROMET_PASS }}
+        run: python tools/tideconversor/baixar_hydromet.py --dias 4
+      - name: Atualizar páginas
+        id: atualiza
+        run: |
+          set +e
+          python tools/tideconversor/atualizar_dados.py
+          rc=$?
+          if [ $rc -ne 0 ] && [ $rc -ne 3 ]; then exit $rc; fi
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+      - name: Publicar
+        if: steps.atualiza.outputs.rc == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "tideconversor-bot"
+          git config user.email "tideconversor-bot@users.noreply.github.com"
+          git add tideconversor tools/tideconversor/dados
+          git diff --cached --quiet || git commit -m "Dados atualizados automaticamente"
+          git push
+          gh api --method POST "/repos/${{ github.repository }}/pages/builds" || true
+      - name: Guardar diagnóstico
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico
+          path: debug/
+          if-no-files-found: ignore
