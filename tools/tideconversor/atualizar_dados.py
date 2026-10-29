@@ -17,7 +17,7 @@ EST = {
   'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2026-08-01', recalcula_antigos=False),
   'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True),
 }
-VERSAO = '3.5'
+VERSAO = '3.6'
 
 def ler(path):
     txt = open(path, encoding='utf-8-sig', errors='replace').read()

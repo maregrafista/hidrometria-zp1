@@ -2,6 +2,12 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.6 (28/10/2026): tábua da DHN × observado no Curuá
+
+- A aba Previsto × observado do Curuá compara a tábua da DHN 2026 (Igarapé Grande do Curuá, 123 componentes, Carta 222) com o observado e com esta previsão. O cartão "Tábua da DHN × observado" mostra erro típico, tendência, erro sem a tendência, erro em 90 % das marés e erro de horário, para o período escolhido e para todo o registro de 2026. Os losangos rosa no gráfico são as marés da tábua. O CSV ganha as colunas da tábua.
+- Referência: as alturas da tábua estão acima do NR da DHN (16,0 cm). O app leva todas ao zero da régua e supõe que o zero do sensor RLS é o zero da régua da DHN.
+- Resultado (01/01 a 28/03/2026, 335 marés): erro típico de 17,3 cm na tábua (tendência −12,3 cm) e de 14,3 cm nesta previsão (tendência −7,0 cm). Na baixamar, a tábua fica 18,6 cm abaixo do observado (erro típico 20,2 cm). Na preamar, 5,9 cm abaixo (13,8 cm). O erro de horário da tábua é de −4,5 ± 10,5 min.
+
 ## Versão 3.5 (28/10/2026): NR do Curuá por nivelamento
 
 - O NR do Curuá (21,8 cm acima do zero da régua) vem de nivelamento da UNIPILOT. O Quadro de maré passa a dizer isso.
