@@ -2,6 +2,17 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.2 (28/10/2026): estação Curuá
+
+- Nova página `tideconversor/curua/` com as abas Previsão, Previsto × observado e Quadro de maré. O seletor de estação fica no cabeçalho das duas páginas.
+- Estação Curuá (Ponta do Céu I): leituras RLS de 01/06/2024 a 28/03/2026, a cada 10 min, sem lacunas. NR = 21,8 cm (informado pelo usuário). Com esse NR, o nível médio fica 2,53 m acima do NR. A DHN publica 2,52 m (Carta 222).
+- Análise harmônica da UNIPILOT (método ANHAMA) com 364 dias (02/06/2024 a 31/05/2025). Sa e Ssa ajustados no mesmo bloco. Teste independente: 01/06/2025 a 28/03/2026.
+- Resultado no teste independente: erro típico de 17,7 cm nas preamares e baixamares, com tendência de −11,6 cm (o nível observado foi mais alto que o previsto). No período do ajuste: 13,9 cm.
+- Comparação com a Tábua de Marés 2026 da DHN (Igarapé Grande do Curuá, 123 componentes): a DHN tem erro de 13,8 cm contra o observado de janeiro a março. A previsão do app tem 16,7 cm no mesmo período e amplitude cerca de 4 % menor.
+- NR: a fórmula NR = S0 − (M2 + S2 + N2 + K2) dá 39,3 cm. O NR informado (21,8 cm) vale. A diferença é de 17,5 cm.
+- O mesmo tratamento de dados da Fazendinha: filtro de picos (nenhum achado), série horária com interpolação limitada a 30 min e controle de qualidade das marés (nenhuma reprovada, a série é contínua).
+- Fazendinha: dados até 28/10/2026 22:05.
+
 ## Versão 3.1 (28/10/2026): botão de referência e leitura sem sobreposição
 
 - Previsto × observado: botão "Acima do NR" / "Acima do zero da régua" visível no topo (antes ficava em "Mais opções"). A escolha vale para todas as telas.
