@@ -2,6 +2,14 @@
 
 Conversão entre a régua de Fazendinha e a tábua de Porto de Santana, horários, **previsão harmônica com componentes anuais** e **comparação previsto × observado**. Setor de Hidrografia da UNIPILOT. Aplicativo estático (HTML, CSS e JS), funciona offline após a primeira visita.
 
+## Versão 3.4 (28/10/2026): novo ajuste do Curuá
+
+- O ajuste do Curuá passa a usar 365 dias de 2025 (01/01/2025 a 31/12/2025), com Sa e Ssa. O ajuste anterior incluía a seca de 2024 (jun/2024 a mai/2025).
+- Teste independente (01/01 a 28/03/2026): erro típico de 14,3 cm nas preamares e baixamares (antes: 16,7 cm), viés de −7,0 cm e erro de horário de −1,5 ± 12 min. No período do ajuste: 11,9 cm.
+- Nível médio S0 = 280,9 cm acima do zero da régua (antes: 274,5 cm). Com o NR informado de 21,8 cm, o nível médio fica 2,59 m acima do NR. A DHN publica 2,52 m. A fórmula do NR dá 39,8 cm.
+- Blocos de 32 dias (a partir de 01/01/2025) erram de 18 a 28 cm. Um ano de dados erra menos, porque separa Sa e Ssa e fixa o nível médio.
+- Resumo "Teste independente" do Curuá: só jan a mar/2026.
+
 ## Versão 3.2 (28/10/2026): estação Curuá
 
 - Nova página `tideconversor/curua/` com as abas Previsão, Previsto × observado e Quadro de maré. O seletor de estação fica no cabeçalho das duas páginas.
