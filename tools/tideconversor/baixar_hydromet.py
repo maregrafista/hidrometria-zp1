@@ -31,7 +31,7 @@ def baixar(pg, nome, dias, saida):
     if not existe(pg, sensor): clica_no(pg, estacao, 'expander')
     clica_no(pg, sensor, 'checkbox')
     agora = dt.datetime.now(ZoneInfo('America/Belem')).replace(tzinfo=None)
-    pg.locator('#customTime').click()
+    pg.locator('label[for=customTime]').click()
     pg.fill('#fromFld', (agora - dt.timedelta(days=dias)).strftime('%Y-%m-%d %H:%M')); pg.fill('#toFld', (agora + dt.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M'))
     pg.select_option('#dataorder', 'ascending')
     with pg.expect_download(timeout=120000) as d: pg.locator('button.data-reports', has_text='Excel').click()
