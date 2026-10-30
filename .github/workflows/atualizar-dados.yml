@@ -23,7 +23,7 @@ jobs:
         with: { python-version: '3.12' }
       - name: Instalar dependências
         run: |
-          pip install numpy pandas playwright
+          pip install numpy pandas playwright xlrd openpyxl lxml
           python -m playwright install --with-deps chromium
       - name: Baixar dados do Hydromet Cloud
         env:
@@ -54,5 +54,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: diagnostico
-          path: debug/
+          path: |
+            debug/
+            tools/tideconversor/entrada/
           if-no-files-found: ignore

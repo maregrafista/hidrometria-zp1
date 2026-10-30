@@ -20,14 +20,25 @@ EST = {
 VERSAO = '3.7'
 
 def ler(path):
-    txt = open(path, encoding='utf-8-sig', errors='replace').read()
-    if '<table' in txt[:20000].lower() or '<html' in txt[:2000].lower():
-        rows = re.findall(r'<tr[^>]*>(.*?)</tr>', txt, re.S)
-        d = pd.DataFrame([re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', r, re.S) for r in rows][1:]).iloc[:, :2]; d.columns = ['t', 'v']; d['v'] = d.v.astype(str).str.replace(',', '.')
+    cab = open(path, 'rb').read(8)
+    if cab[:4] == b'\xd0\xcf\x11\xe0' or cab[:2] == b'PK':   # Excel de verdade (.xls binário ou .xlsx)
+        x = pd.read_excel(path, header=None, engine='xlrd' if cab[:2] != b'PK' else 'openpyxl')
+        d = None
+        for i in range(min(len(x), 30)):   # acha a 1a linha cuja 1a coluna é data/hora
+            if pd.notna(pd.to_datetime(x.iloc[i, 0], errors='coerce')): d = x.iloc[i:, :2].copy(); break
+        assert d is not None, 'não achei linhas de data/hora no Excel'
+        d.columns = ['t', 'v']; d['v'] = d.v.astype(str).str.replace(',', '.')
     else:
-        d = pd.read_csv(path, sep=';', decimal=',', encoding='utf-8-sig').iloc[:, :2]; d.columns = ['t', 'v']
-    d['t'] = pd.to_datetime(d.t, errors='coerce'); d['v'] = pd.to_numeric(d.v, errors='coerce')
-    return d.dropna().astype({'v': float})
+        txt = open(path, encoding='utf-8-sig', errors='replace').read()
+        if '<table' in txt[:20000].lower() or '<html' in txt[:2000].lower():
+            rows = re.findall(r'<tr[^>]*>(.*?)</tr>', txt, re.S)
+            d = pd.DataFrame([re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', r, re.S) for r in rows][1:]).iloc[:, :2]; d.columns = ['t', 'v']; d['v'] = d.v.astype(str).str.replace(',', '.')
+        else:
+            d = pd.read_csv(path, sep=';', decimal=',', encoding='utf-8-sig').iloc[:, :2]; d.columns = ['t', 'v']
+    d['t'] = pd.to_datetime(d.t, errors='coerce'); d['v'] = pd.to_numeric(d.v, errors='coerce'); d = d.dropna().astype({'v': float})
+    if len(d): print(f'  {os.path.basename(path)}: {len(d)} leituras, {d.t.min()} a {d.t.max()}, mediana {d.v.median():.2f}')
+    if len(d) and d.v.median() > 20: d['v'] = d.v / 100   # série do app em metros; Hydromet pode exportar em cm
+    return d
 
 def bloco(s):
     m = [m for m in re.finditer(r'<script>window\.TC_HARM=(\{.*?\});?\s*</script>', s, re.S)]

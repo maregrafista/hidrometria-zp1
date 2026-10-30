@@ -34,7 +34,12 @@ def baixar(pg, nome, dias, saida):
     pg.locator('label[for=customTime]').click()
     pg.fill('#fromFld', (agora - dt.timedelta(days=dias)).strftime('%Y-%m-%d %H:%M')); pg.fill('#toFld', (agora + dt.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M'))
     pg.select_option('#dataorder', 'ascending')
-    with pg.expect_download(timeout=120000) as d: pg.locator('button.data-reports', has_text='Excel').click()
+    try:
+        with pg.expect_download(timeout=45000) as d: pg.locator('button.data-reports', has_text='Excel').click()
+    except Exception:
+        if 'has no data' in pg.inner_text('body') or 'não possui dados' in pg.inner_text('body'):
+            print(f'[{nome}] sem dados no período (sensor {sensor} sem leituras nos últimos {dias} dias)'); return
+        raise
     os.makedirs(os.path.join(AQUI, 'entrada', nome), exist_ok=True)
     alvo = os.path.join(AQUI, 'entrada', nome, f'rls_{agora:%Y%m%d_%H%M}.xls'); d.value.save_as(alvo)
     print(f'[{nome}] baixado: {alvo} ({os.path.getsize(alvo)} bytes)')
