@@ -17,7 +17,7 @@ EST = {
   'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2026-08-01', recalcula_antigos=False),
   'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True),
 }
-VERSAO = '3.7'
+VERSAO = '3.8'
 
 def ler(path):
     cab = open(path, 'rb').read(8)
