@@ -164,7 +164,7 @@ figure{margin:0}
 #carta .carta-chart tr.faz td{background:transparent;font-weight:700;font-size:1.06em}
 #carta .carta-chart td{padding:9px 8px}
 #carta .carta-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:26px}#carta table,#carta th,#carta td{white-space:normal}#carta .carta-chart th,#carta .carta-chart td{white-space:nowrap}#carta .carta-grid>*{min-width:0}
-#carta .carta-fig{margin-top:6px}
+#carta .carta-fig{margin-top:6px}#carta .carta-obs{margin:6px 0 0;padding-left:1.5em;font:clamp(12.5px,1.2vw,13.5px)/1.5 var(--serif)}#carta .carta-obs li{margin:3px 0}#carta .carta-rntab tr.carta-lv td{font-style:italic;color:var(--muted,#667)}
 #carta #cartaSvg{max-width:none;width:100%}
 #carta tr.ref td{border-top:1.5px solid var(--ink)}
 @media (max-width:760px){#carta .carta-grid{grid-template-columns:minmax(0,1fr)}#compare .cmp-card{border-left:0;border-top:1px solid var(--line);padding:10px 4px}#compare .cmp-card:first-child{border-top:0}#carta .carta-box{padding:16px 14px}#carta .carta-head b{font-size:23px}#carta .carta-tab th,#carta .carta-tab td{padding:6px 6px}}
@@ -545,9 +545,17 @@ header .brand span{font-size:10px!important;letter-spacing:.9px}
       </div>
       <figure class="carta-fig"><svg id="cartaSvg" role="img" aria-label="Esquema dos níveis de maré em relação ao NR" viewBox="0 0 560 420"></svg><figcaption class="fig-cap"><b>Figura 1.</b> Níveis de maré de Fazendinha em relação ao NR (m). A faixa clara mostra a amplitude de sizígia. A faixa escura mostra a amplitude de quadratura. MSL é o nível médio.</figcaption></figure>
     </div>
-    <h3>Tabela 4. Referência vertical, método e qualidade dos dados</h3>
+    <div id="cartaRn">
+      <h3>Figura 2. Diagrama da estação maregráfica</h3>
+      <figure class="carta-fig carta-rn"><svg id="cartaRnSvg" role="img" aria-label="Diagrama da estação maregráfica de Fazendinha: régua de 6 m, referências de nível, zero da régua, NR e nível médio" viewBox="0 0 640 520"></svg><figcaption class="fig-cap"><b>Figura 2.</b> Diagrama da estação de Fazendinha. Alturas em cm. A régua e o zero da régua (igual ao zero do sensor RLS) são a origem. A escala vertical é interrompida entre 3,00 m e 4,00 m. Abaixo da interrupção a escala é menor, e acima dela é ampliada, para separar as referências de nível. As setas que cruzam a interrupção não estão em escala.</figcaption></figure>
+      <h3>Tabela 4. Referências de nível</h3>
+      <div class="tablewrap-x"><table class="carta-tab carta-rntab"><thead><tr><th>Ponto</th><th>Acima do zero da régua (cm)</th><th>Acima do NR (cm)</th><th>Acima do NM (cm)</th><th>Desnível para o ponto acima (cm)</th></tr></thead><tbody id="cartaRnTab"></tbody></table></div>
+      <h3>Observações</h3>
+      <ol class="carta-obs" id="cartaRnObs"></ol>
+    </div>
+    <h3>Tabela 5. Referência vertical, método e qualidade dos dados</h3>
     <table class="carta-tab" id="cartaQual"><tbody></tbody></table>
-    <h3>Tabela 5. Constantes harmônicas principais</h3>
+    <h3>Tabela 6. Constantes harmônicas principais</h3>
     <div class="tablewrap-x"><table class="carta-tab carta-const"><thead><tr><th>Componente</th><th>Velocidade (°/h)</th><th>Amplitude (m)</th><th>Fase (°)</th></tr></thead><tbody id="cartaConst"></tbody></table></div>
     <p class="carta-note" id="cartaFonte"></p>
   </article>
@@ -997,6 +1005,51 @@ document.getElementById('compareTab').onclick=()=>showPanel('compare');document.
   drawSvg(); let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawSvg, 120); });
   new MutationObserver(() => { if (!$('carta').hidden) setTimeout(drawSvg, 30); }).observe($('carta'), { attributes: true, attributeFilter: ['hidden'] });
   if (window.ResizeObserver) { let lw = 0; new ResizeObserver(() => { const w = $('cartaSvg').parentNode.clientWidth; if (w && w !== lw) { lw = w; drawSvg(); } }).observe($('cartaSvg').parentNode); }
+  // diagrama da estação (padrão das fichas de estação da DHN): régua, referências de nível, zero, NR e NM
+  if (E) { const bx = $('cartaRn'); if (bx) bx.remove(); document.querySelectorAll('#carta h3').forEach(h => { h.textContent = h.textContent.replace(/^Tabela 5\./, 'Tabela 4.').replace(/^Tabela 6\./, 'Tabela 5.'); }); }
+  else {
+    const RNS = [['Marca 6,00 m', 600.0], ['RN2', 490.0], ['RN1', 454.0], ['RN4', 437.0], ['RN3', 418.8]], S0 = q.S0, Z0 = q.Zo;
+    $('cartaRnTab').innerHTML = RNS.map(([n, h], i) => `<tr><td>${n}</td><td>${f(h, 1)}</td><td>${f(h - NR, 1)}</td><td>${f(h - S0, 1)}</td><td>${i ? f(RNS[i - 1][1] - h, 1) : '—'}</td></tr>`).join('') +
+      `<tr class="carta-lv"><td>Nível médio (NM = S0)</td><td>${f(S0, 1)}</td><td>${f(Z0, 1)}</td><td>0,0</td><td>—</td></tr><tr class="carta-lv"><td>NR de trabalho</td><td>${f(NR, 1)}</td><td>0,0</td><td>${f(NR - S0, 1)}</td><td>—</td></tr><tr class="carta-lv"><td>Zero da régua (= zero do RLS)</td><td>0,0</td><td>${f(-NR, 1)}</td><td>${f(-S0, 1)}</td><td>—</td></tr>`;
+    $('cartaRnObs').innerHTML = [
+      `Elementos de maré: constantes harmônicas do PACMARÉ (análise ANHAMA) do bloco 02, de 26/02/2025 a 05/01/2026 (7.510 h). As componentes Sa e Ssa foram ajustadas aos blocos 02 e 04. O nível médio anual é S0 = ${f(S0, 1)} cm acima do zero da régua.`,
+      `Método: análise harmônica. NR = S0 − (M2 + S2 + N2 + K2) = ${f(NR, 1)} cm acima do zero da régua. Este NR é de trabalho do Setor de Hidrografia da UNIPILOT (classe de Courtier: semidiurna, C = ${f(q.F, 2)}).`,
+      'Posição da estação: Lat 00°03,4′ S, Long 051°06,5′ W.',
+      'Referências de nível: nivelamento geométrico de 18/10/2026 (nível Topcon), por ida e volta. Os desníveis fecharam com diferença de 1 mm. A origem é a marca de 6,00 m da régua, tomada como 600,0 cm acima do zero.',
+      'O zero da régua é igual ao zero do sensor RLS. O RLS mede a altura em m acima do zero da régua.'].map(t => `<li>${t}</li>`).join('');
+    function drawRn() {
+      const svg = $('cartaRnSvg'); if (!svg) return;
+      const W = Math.max(300, Math.round(svg.parentNode.clientWidth || 640)), nar = W < 460, wide = W >= 640;
+      const fs = nar ? 12.5 : 13.5, fn = nar ? 13.5 : 15, a = nar ? .66 : .78, b = nar ? 1.5 : 1.75, G = 26, T = 26, UT = 612, xS = nar ? 136 : 168, sw = 26;
+      const Hup = (UT - 400) * b, yU = v => T + (UT - v) * b, yL = v => T + Hup + G + (300 - v) * a, BOT = yL(0), Ht = Math.round(BOT + (nar ? 66 : 52));
+      const Y = v => v >= 400 ? yU(v) : yL(v);
+      const ink = 'var(--ink,#222)', mut = 'var(--muted,#667)', ln = 'var(--line,#ccc)', wat = 'var(--water,#2f7283)', och = 'var(--ochre,#9d6c2b)', fnt = 'ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif';
+      const xe = W - 8, xR = xS + sw, x0 = xR + (nar ? 46 : 58), step = nar ? 31 : 44;
+      let s = `<defs><marker id="arrR" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${ink}"/></marker></defs><g font-family='${fnt}'>`;
+      // régua: dois trechos (escala interrompida entre 300 e 400 cm)
+      s += `<rect x="${xS}" y="${yL(300)}" width="${sw}" height="${BOT - yL(300)}" fill="var(--paper,#fff)" stroke="${ink}" stroke-width="1.4"/><rect x="${xS}" y="${yU(600)}" width="${sw}" height="${yU(400) - yU(600)}" fill="var(--paper,#fff)" stroke="${ink}" stroke-width="1.4"/>`;
+      s += `<path d="M${xS - 3} ${yL(300) - 9} l${sw + 6} -7 M${xS - 3} ${yU(400) + 9} l${sw + 6} -7" stroke="${ink}" stroke-width="1.2" fill="none"/>`;
+      for (let v = 0; v <= 600; v += 50) { if (v > 300 && v < 400) continue; const y = Y(v), L = v % 100 ? 6 : 11; s += `<line x1="${xS}" x2="${xS + L}" y1="${y}" y2="${y}" stroke="${ink}"/>`; if (v % 100 === 0) s += `<text x="${xR + 4}" y="${v ? y + 4 : y - 4}" font-size="11" fill="${mut}">${v / 100} m</text>`; }
+      s += `<text transform="translate(${xS + sw / 2 + 4} ${(yL(300) + BOT) / 2}) rotate(-90)" text-anchor="middle" font-size="${fs}" font-weight="700" fill="${ink}">Régua de 6 m</text>`;
+      // referências de nível à esquerda (cota acima do zero)
+      s += `<text x="${xS - 8}" y="${T - 10}" text-anchor="end" font-size="${fs - 1}" fill="${mut}">cm acima do zero</text>`;
+      for (const [n, h] of RNS) { const y = yU(h), ref = n === 'RN2'; s += `<line x1="6" x2="${xS}" y1="${y}" y2="${y}" stroke="${ink}" stroke-dasharray="${ref ? '' : '2 3'}"/><text x="6" y="${y - 5}" font-size="${fn}" font-weight="700" fill="${ink}">${nar && n.startsWith('Marca') ? 'Marca 6 m' : n}</text><text x="${xS - 8}" y="${y - 5}" text-anchor="end" font-size="${fs}" fill="${ink}">${f(h, 1)}</text>`; }
+      // níveis (zero, NR, NM) e RN2 como referência, à direita
+      const lv = [['NM (S0)', S0, wat, '6 4'], ['NR', NR, och, '5 4'], ['Zero da régua', 0, ink, '']], yR = yU(490);
+      s += `<line x1="${xR}" x2="${xe}" y1="${yR}" y2="${yR}" stroke="${ink}" stroke-dasharray="2 3"/><text x="${xe}" y="${yR - 5}" text-anchor="end" font-size="${fn}" font-weight="700" fill="${ink}">RN2</text>`;
+      for (const [n, v, c, d] of lv) { const y = yL(v); s += `<line x1="${xR}" x2="${xe}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="${v ? 1.5 : 2.2}" ${d ? `stroke-dasharray="${d}"` : ''}/>`; }
+      s += `<text x="${xe}" y="${yL(S0) + (nar ? 17 : -5)}" text-anchor="end" font-size="${fn}" fill="${wat}"><tspan font-weight="700">NM</tspan> ${f(S0, 1)}</text><text x="${xe}" y="${yL(NR) - 5}" text-anchor="end" font-size="${fn}" fill="${och}"><tspan font-weight="700">NR</tspan> ${f(NR, 1)}</text><text x="${xe}" y="${BOT + (nar ? 38 : 17)}" text-anchor="end" font-size="${fn}" font-weight="700" fill="${ink}">Zero da régua</text><text x="${xe}" y="${BOT + (nar ? 54 : 34)}" text-anchor="end" font-size="${fs - 1}" fill="${mut}">(= zero do sensor RLS)</text>`;
+      // cotas verticais
+      const dim = (x, ya, yb, label, brk) => `<line x1="${x}" x2="${x}" y1="${ya - 1}" y2="${yb + 1}" stroke="${ink}" stroke-width="1.2" marker-start="url(#arrR)" marker-end="url(#arrR)"/>${brk ? `<path d="M${x - 5} ${(ya + yb) / 2 + 3} l10 -6" stroke="${ink}" stroke-width="1.2"/>` : ''}<text transform="translate(${x - 7} ${(ya + yb) / 2 + (brk ? 0 : 0)}) rotate(-90)" text-anchor="middle" font-size="${fs}" fill="${ink}">${label}</text>`;
+      s += dim(x0, yR, yL(0), `${f(490, 1)} cm`, 1) + dim(x0 + step, yR, yL(NR), `${f(490 - NR, 1)} cm`, 1) + dim(x0 + 2 * step, yR, yL(S0), `${f(490 - S0, 1)} cm`, 1);
+      if (wide) s += dim(x0 + 3 * step + 14, yL(S0), yL(0), `${f(S0, 1)}`) + dim(x0 + 4 * step + 14, yL(S0), yL(NR), `${f(Z0, 1)}`) + dim(x0 + 5 * step + 14, yL(NR), yL(0), `${f(NR, 1)}`);
+      s += `<text x="${x0 - 7}" y="${yR - 6}" text-anchor="start" font-size="${fs - 1}" fill="${mut}">RN2 acima de:</text><text x="${x0}" y="${yL(0) + 15}" text-anchor="middle" font-size="${fs - 2}" fill="${mut}">zero</text><text x="${x0 + step}" y="${yL(0) + 15}" text-anchor="middle" font-size="${fs - 2}" fill="${mut}">NR</text><text x="${x0 + 2 * step}" y="${yL(0) + 15}" text-anchor="middle" font-size="${fs - 2}" fill="${mut}">NM</text>` + (wide ? ['S0', 'Z0', 'NR'].map((n, i) => `<text x="${x0 + (3 + i) * step + 14}" y="${yL(0) + 15}" text-anchor="middle" font-size="${fs - 2}" fill="${mut}">${n}</text>`).join('') : '');
+      svg.setAttribute('viewBox', `0 0 ${W} ${Ht}`); svg.setAttribute('height', Ht); svg.setAttribute('width', W); svg.innerHTML = s + '</g>';
+    }
+    drawRn(); let rz2; window.addEventListener('resize', () => { clearTimeout(rz2); rz2 = setTimeout(drawRn, 120); });
+    new MutationObserver(() => { if (!$('carta').hidden) setTimeout(drawRn, 30); }).observe($('carta'), { attributes: true, attributeFilter: ['hidden'] });
+    if (window.ResizeObserver) { let lw2 = 0; new ResizeObserver(() => { const w = $('cartaRnSvg').parentNode.clientWidth; if (w && w !== lw2) { lw2 = w; drawRn(); } }).observe($('cartaRnSvg').parentNode); }
+  }
   $('cartaPrint').onclick = () => window.print();
 })();
 </script><script>'use strict';
