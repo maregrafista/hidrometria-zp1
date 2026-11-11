@@ -17,7 +17,7 @@ EST = {
   'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2024-11-07', recalcula_antigos=True),
   'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True, apos='2026-11-04 18:10'),   # Hydromet (RADAR I) só vale a partir daqui; antes, log do Sutron (UTC-3)
 }
-VERSAO = '4.3'
+VERSAO = '4.4'
 
 def ler(path):
     cab = open(path, 'rb').read(8)
