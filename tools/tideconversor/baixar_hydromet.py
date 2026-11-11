@@ -13,7 +13,7 @@ URL = 'https://www.hydrometcloud.com/hydrometcloud/index.jsp?menu=index'
 REL = 'https://www.hydrometcloud.com/hydrometcloud/jsp/CustomReport/CustomReports.jsp?menu=CustomReports'
 ESTACOES = {  # nome no app -> (estação na árvore, sensor)
   'fazendinha': ('Atalaia_Fazendinha', 'RLS'),
-  'curua': ('PONTA_DO_CÉU_I', os.environ.get('HYDROMET_SENSOR_CURUA', 'RADAR I')),
+  'curua': ('PONTA_DO_CÉU_I', os.environ.get('HYDROMET_SENSOR_CURUA', 'RADAR')),
 }
 JS_NO = "(t)=>[...document.querySelectorAll('a.dynatree-title')].find(e=>e.textContent.trim()===t)"
 
