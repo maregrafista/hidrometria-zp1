@@ -105,7 +105,15 @@ def processa(nome, cfg):
         gg = (gp.t.diff().dt.total_seconds() / 3600).max(); sp = sum(1 for r in rem if pd.Timestamp(r).strftime('%Y-%m') == mo)
         dm = d[d.mo == mo]; vv = dm[dm.lr == 0]
         qc.append([mo, round(gp.slot.nunique() / tot * 100, 1), round(float(gg) if gg == gg else 0, 1), sp, len(dm), len(vv), round(float(vv.eh.mean()), 1) if len(vv) else None, round(float((vv.eh ** 2).mean() ** .5), 1) if len(vv) else None])
-    H['obs'] = hourly(clean); H['ev'] = evn; H['qc'] = qc
+    if H.get('dhn'):   # pares com a tábua da DHN (altura em décimos de cm acima do NR do app, e diferença de horário em min)
+        D_ = np.array(H['dhn']['ev']); dm_, dty_, dh_ = D_[:, 0], D_[:, 1], D_[:, 2]; evp = []
+        for e in evn:
+            k = np.where((dty_ == e[1]) & (np.abs(dm_ - e[0]) <= 150))[0]
+            if len(k): j = k[np.abs(dm_[k] - e[0]).argmin()]; evp.append(e + [int(dh_[j]), int(dm_[j] - e[0])])
+            else: evp.append(e + [None, None])
+        evn_h = evp
+    else: evn_h = evn
+    H['obs'] = hourly(clean); H['ev'] = evn_h; H['qc'] = qc
     ini, fim = all_.t.min(), all_.t.max(); f = lambda x: x.strftime('%d/%m/%Y %H:%M')
     H['metodo']['dados'] = re.sub(r'de \d\d/\d\d/\d{4} \d\d:\d\d a \d\d/\d\d/\d{4} \d\d:\d\d|até \d\d/\d\d/\d{4}( \d\d:\d\d)?', lambda mm: (f'de {f(ini)} a {f(fim)}' if mm.group(0).startswith('de') else f'até {f(fim)}'), H['metodo']['dados'], count=1)
     H['ultimo'] = f(fim)
