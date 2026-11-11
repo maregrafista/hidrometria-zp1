@@ -29,7 +29,7 @@ jobs:
         env:
           HYDROMET_USER: ${{ secrets.HYDROMET_USER }}
           HYDROMET_PASS: ${{ secrets.HYDROMET_PASS }}
-        run: python tools/tideconversor/baixar_hydromet.py --dias 4
+        run: python tools/tideconversor/baixar_hydromet.py --dias 8
       - name: Atualizar páginas
         id: atualiza
         run: |

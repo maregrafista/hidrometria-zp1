@@ -15,7 +15,7 @@ RAIZ = os.path.abspath(os.path.join(AQUI, '..', '..'))
 GAP, WIN = 15, 5400
 EST = {
   'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2026-08-01', recalcula_antigos=False),
-  'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True),
+  'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True, apos='2026-11-04 18:10'),   # Hydromet (RADAR I) só vale a partir daqui; antes, log do Sutron (UTC-3)
 }
 VERSAO = '4.2'
 
@@ -57,6 +57,7 @@ def processa(nome, cfg):
     arqs = sorted(f for f in glob.glob(os.path.join(AQUI, 'entrada', nome, '*')) if os.path.isfile(f) and not f.endswith('.md'))
     if not arqs: print(f'[{nome}] sem arquivo novo'); return False
     novos = [ler(a) for a in arqs]
+    if cfg.get('apos'): novos = [x[x.t >= cfg['apos']] if os.path.basename(a).startswith('rls_') else x for x, a in zip(novos, arqs)]
     all_ = pd.concat([base] + novos).drop_duplicates('t', keep='last').sort_values('t').reset_index(drop=True)
     if len(all_) < len(base) or all_.t.max() < base.t.max(): print(f'[{nome}] série nova menor que a anterior; parei'); return False
     if len(all_) == len(base): print(f'[{nome}] nenhuma leitura nova'); [os.remove(a) for a in arqs]; return False
