@@ -14,10 +14,10 @@ from events import predictor, swing, observed_extremes
 RAIZ = os.path.abspath(os.path.join(AQUI, '..', '..'))
 GAP, WIN = 15, 5400
 EST = {
-  'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2026-08-01', recalcula_antigos=False),
+  'fazendinha': dict(pagina='tideconversor/index.html', passo=5, filtro='residuo', desde='2024-11-07', recalcula_antigos=True),
   'curua':      dict(pagina='tideconversor/curua/index.html', passo=10, filtro='segdif', desde=None, recalcula_antigos=True, apos='2026-11-04 18:10'),   # Hydromet (RADAR I) só vale a partir daqui; antes, log do Sutron (UTC-3)
 }
-VERSAO = '4.2'
+VERSAO = '4.3'
 
 def ler(path):
     cab = open(path, 'rb').read(8)
@@ -55,12 +55,13 @@ def processa(nome, cfg):
     pag = os.path.join(RAIZ, cfg['pagina']); s = open(pag, encoding='utf-8').read(); m = bloco(s); H = json.loads(m.group(1))
     serie = os.path.join(AQUI, 'dados', f'serie_{nome}.csv'); base = pd.read_csv(serie, sep=';', decimal=',', encoding='utf-8-sig', parse_dates=['t'])
     arqs = sorted(f for f in glob.glob(os.path.join(AQUI, 'entrada', nome, '*')) if os.path.isfile(f) and not f.endswith('.md'))
-    if not arqs: print(f'[{nome}] sem arquivo novo'); return False
+    RECALC = '--recalcula' in sys.argv
+    if not arqs and not RECALC: print(f'[{nome}] sem arquivo novo'); return False
     novos = [ler(a) for a in arqs]
     if cfg.get('apos'): novos = [x[x.t >= cfg['apos']] if os.path.basename(a).startswith('rls_') else x for x, a in zip(novos, arqs)]
     all_ = pd.concat([base] + novos).drop_duplicates('t', keep='last').sort_values('t').reset_index(drop=True)
     if len(all_) < len(base) or all_.t.max() < base.t.max(): print(f'[{nome}] série nova menor que a anterior; parei'); return False
-    if len(all_) == len(base): print(f'[{nome}] nenhuma leitura nova'); [os.remove(a) for a in arqs]; return False
+    if len(all_) == len(base) and not RECALC: print(f'[{nome}] nenhuma leitura nova'); [os.remove(a) for a in arqs]; return False
     print(f'[{nome}] {len(base)} -> {len(all_)} leituras; última {all_.t.max()}')
     NR = H['nr_cm']; S0 = H['S0_anual']; pr = predictor(H['comps'], S0); NRm = NR
     # picos espúrios
@@ -122,5 +123,5 @@ if __name__ == '__main__':
             pag = os.path.join(RAIZ, cfg['pagina']); u = pd.read_csv(os.path.join(AQUI, 'dados', f'serie_{n}.csv'), sep=';', decimal=',', encoding='utf-8-sig', parse_dates=['t']).t.max()
             novo = rodape(open(pag, encoding='utf-8').read(), u.strftime('%d/%m/%Y %H:%M')); open(pag, 'w', encoding='utf-8').write(novo)
         sys.exit(0)
-    nomes = sys.argv[1:] or list(EST); ok = [processa(n, EST[n]) for n in nomes]
+    nomes = [x for x in sys.argv[1:] if not x.startswith('--')] or list(EST); ok = [processa(n, EST[n]) for n in nomes]
     sys.exit(0 if any(ok) else 3)
